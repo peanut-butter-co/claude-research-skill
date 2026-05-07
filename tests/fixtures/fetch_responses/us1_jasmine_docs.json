@@ -1,0 +1,7 @@
+{
+  "url": "https://jasmine.github.io/pages/getting_started.html",
+  "ok": true,
+  "status_code": 200,
+  "content": "Jasmine is a Behavior Driven Development (BDD) framework for testing JavaScript code. It does not depend on any other JavaScript framework and does not require a DOM. Jasmine has a clean, obvious syntax so that you can write tests easily. Jasmine includes built-in matchers, spy functionality, and async support with no additional dependencies required. Startup time is approximately 400ms. TypeScript support requires additional type definitions (@types/jasmine) and a TypeScript compiler step; not zero-config. ESM support is limited — Jasmine primarily targets CommonJS and has partial ESM support added in recent versions. Snapshot testing is not natively supported; requires third-party plugins such as jasmine-snapshot. Jasmine runs tests sequentially by default; parallel execution is not natively supported and requires external tooling. Jasmine has approximately 2.5 million weekly downloads on npm. Jasmine is still the default testing framework for Angular CLI projects. Maintained by a small open source team with slower release cadence than Jest or Vitest.",
+  "fetch_method": "webfetch"
+}

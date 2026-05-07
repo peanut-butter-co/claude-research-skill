@@ -1,0 +1,19 @@
+# /last30days results for: playwright javascript testing framework
+
+## Reddit (r/javascript, r/QualityAssurance, r/webdev)
+- "Playwright vs Cypress — which one in 2024?" (r/QualityAssurance, 2024-02-10, 521 upvotes)
+  https://reddit.com/r/QualityAssurance/comments/stu901/playwright_vs_cypress_2024
+- "Playwright is now my go-to for E2E — trace viewer is a game changer" (r/javascript, 2024-01-25, 389 upvotes)
+  https://reddit.com/r/javascript/comments/vwx234/playwright_trace_viewer
+- "Playwright component testing is great but don't compare it to Jest for unit tests" (r/webdev, 2024-02-01, 145 upvotes)
+  https://reddit.com/r/webdev/comments/yza567/playwright_component_vs_unit
+
+## Hacker News
+- "Playwright 1.42 released" (HN, 2024-02-28, 267 points)
+  https://news.ycombinator.com/item?id=45678901
+- "Ask HN: Should I use Playwright or Cypress for a new project?" (HN, 2024-01-18, 198 points)
+  https://news.ycombinator.com/item?id=56789012
+
+## X (Twitter)
+- "@playwright_dev: Playwright 1.42 — new accessibility testing helpers and faster browser launch" (2024-02-28, 876 likes)
+  https://x.com/playwright_dev/status/bcd890

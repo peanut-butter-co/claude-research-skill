@@ -1,0 +1,36 @@
+{
+  "subquery": "What are the estimated compliance costs for startups under 50 employees?",
+  "fields": {
+    "summary": {
+      "value": "Industry estimates put compliance costs for SMEs at EUR 25,000–50,000 for initial setup under the EU AI Act, with ongoing annual costs of EUR 5,000–15,000 depending on risk tier. High-risk system providers face significantly higher costs due to mandatory third-party audits.",
+      "sources": [
+        {
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai",
+          "title": "EU regulatory framework for AI - European Commission",
+          "tier": "B",
+          "date": "2024-09-15",
+          "fetch_method": "webfetch",
+          "extraction_failed": false
+        },
+        {
+          "url": "https://blog.iapp.org/eu-ai-act-sme-compliance-guide/",
+          "title": "EU AI Act SME Compliance Guide - IAPP",
+          "tier": "C",
+          "date": "2024-10-20",
+          "fetch_method": "webfetch",
+          "extraction_failed": false
+        }
+      ]
+    }
+  },
+  "uncertain": [],
+  "pruned": false,
+  "emergent_threads_chased": [],
+  "proposed_extensions": [],
+  "budget_consumed": 7,
+  "budget_exhausted": false,
+  "_meta": {
+    "agent_run": "2026-05-07T10:00:00",
+    "hints_received": []
+  }
+}

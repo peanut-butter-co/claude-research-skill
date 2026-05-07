@@ -1,0 +1,15 @@
+# /last30days results for: jest javascript testing framework
+
+## Reddit (r/javascript, r/reactjs, r/webdev)
+- "Switched from Jest to Vitest, 10x faster startup" (r/javascript, 2024-02-15, 847 upvotes)
+  https://reddit.com/r/javascript/comments/abc123/switched_from_jest_to_vitest
+- "Jest vs Vitest in 2024 — should I migrate?" (r/reactjs, 2024-01-30, 412 upvotes)
+  https://reddit.com/r/reactjs/comments/def456/jest_vs_vitest_2024
+- "Jest ESM support is still a pain, anyone else?" (r/webdev, 2024-01-10, 203 upvotes)
+  https://reddit.com/r/webdev/comments/ghi789/jest_esm_support_pain
+
+## Hacker News
+- "Show HN: Jest vs Vitest benchmark" (HN, 2024-01-20, 312 points)
+  https://news.ycombinator.com/item?id=12345678
+- "Ask HN: Is Jest still the default choice in 2024?" (HN, 2024-02-05, 178 points)
+  https://news.ycombinator.com/item?id=23456789

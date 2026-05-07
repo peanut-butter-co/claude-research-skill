@@ -1,0 +1,15 @@
+{
+  "item": "jest",
+  "fields": {
+    "esm_support": {
+      "value": "Partial ESM support via experimental-vm-modules flag",
+      "sources": [
+        {"url": "https://jestjs.io/docs/ecmascript-modules", "title": "Jest ESM docs", "tier": "A", "date": "2024-01-01"}
+      ]
+    }
+  },
+  "_meta": {
+    "agent_id": "jest-001",
+    "hints_sent": [{"entity": "ESM", "context": "Jest has partial ESM support via experimental flag"}]
+  }
+}

@@ -1,0 +1,34 @@
+# SC-007 consolidation history fixture
+# Simulates 5 sessions with 3+ corrections that converge on the same rule
+sessions:
+  - date: "2026-01-01"
+    corrections:
+      - type: "source-classification"
+        body: "ArXiv preprints should be Tier B, not Tier A — not peer-reviewed."
+        trigger: "user-feedback"
+  - date: "2026-01-08"
+    corrections:
+      - type: "source-classification"
+        body: "ArXiv preprints should be Tier B — lacks peer review."
+        trigger: "user-feedback"
+      - type: "query-strategy"
+        body: "Add site:arxiv.org operator only when topic is academic research."
+        trigger: "self-detection"
+  - date: "2026-01-15"
+    corrections:
+      - type: "source-classification"
+        body: "ArXiv is Tier B because it is a preprint server without formal peer review."
+        trigger: "user-feedback"
+      - type: "scoring-rule"
+        body: "Tier A sources from official docs outweigh Tier B blog posts 3:1."
+        trigger: "user-feedback"
+  - date: "2026-01-22"
+    corrections:
+      - type: "query-strategy"
+        body: "Narrow arxiv searches with subject category (cs.LG, cs.AI) for ML topics."
+        trigger: "self-detection"
+  - date: "2026-01-29"
+    corrections:
+      - type: "source-classification"
+        body: "ArXiv preprints are Tier B by default; promote to Tier A only if citing peer-reviewed version."
+        trigger: "user-feedback"

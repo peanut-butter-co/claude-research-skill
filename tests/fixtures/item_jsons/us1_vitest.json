@@ -1,0 +1,70 @@
+{
+  "item": "vitest",
+  "fields": {
+    "startup_time": {
+      "value": "~120ms cold start; significantly faster than Jest due to native ESM and Vite's transformation pipeline",
+      "sources": [
+        {"url": "https://vitest.dev/guide/", "title": "Vitest Guide", "tier": "A", "date": "2024-02-01", "fetch_method": "webfetch", "extraction_failed": false},
+        {"url": "https://dev.to/sara/vitest-startup-speed-benchmark", "title": "Vitest startup benchmarks", "tier": "C", "date": "2024-01-25", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "watch_mode_speed": {
+      "value": "Near-instant; leverages Vite's HMR — only changed modules and their dependents are re-run",
+      "sources": [
+        {"url": "https://vitest.dev/guide/features.html#watch-mode", "title": "Vitest Watch Mode", "tier": "A", "date": "2024-02-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "typescript_support": {
+      "value": "Native, zero-config; Vitest processes TypeScript directly without a separate plugin",
+      "sources": [
+        {"url": "https://vitest.dev/guide/features.html#typescript", "title": "Vitest TypeScript Support", "tier": "A", "date": "2024-02-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "esm_support": {
+      "value": "First-class, no extra configuration required; built on Vite which natively handles ESM",
+      "sources": [
+        {"url": "https://vitest.dev/guide/features.html#esm-first", "title": "Vitest ESM Support", "tier": "A", "date": "2024-02-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "snapshot_testing": {
+      "value": "Yes, built-in and compatible with Jest snapshot format for easy migration",
+      "sources": [
+        {"url": "https://vitest.dev/guide/snapshot.html", "title": "Vitest Snapshot Testing", "tier": "A", "date": "2024-02-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "parallel_execution": {
+      "value": "Yes, via worker threads and child processes; configurable pool strategies (threads, forks, vmThreads)",
+      "sources": [
+        {"url": "https://vitest.dev/config/#pool", "title": "Vitest Pool Config", "tier": "A", "date": "2024-02-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "weekly_downloads": {
+      "value": "~15M per week on npm and growing rapidly",
+      "sources": [
+        {"url": "https://npmjs.com/package/vitest", "title": "vitest - npm", "tier": "B", "date": "2024-03-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "active_maintenance": {
+      "value": "Yes, actively maintained by Vite/Vue core team; frequent releases",
+      "sources": [
+        {"url": "https://github.com/vitest-dev/vitest", "title": "vitest-dev/vitest GitHub", "tier": "B", "date": "2024-03-15", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "notable_users": {
+      "value": "Nuxt, SvelteKit, and many projects in the Vite ecosystem",
+      "sources": [
+        {"url": "https://vitest.dev/", "title": "Vitest Home", "tier": "A", "date": "2024-02-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    }
+  },
+  "uncertain": [],
+  "pruned": false,
+  "emergent_threads_chased": [],
+  "proposed_extensions": [],
+  "budget_consumed": 8,
+  "budget_exhausted": false,
+  "_meta": {
+    "agent_run": "2026-05-07T10:05:00",
+    "hints_received": []
+  }
+}

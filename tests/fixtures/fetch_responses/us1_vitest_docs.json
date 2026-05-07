@@ -1,0 +1,7 @@
+{
+  "url": "https://vitest.dev/guide/",
+  "ok": true,
+  "status_code": 200,
+  "content": "Vitest is a Vite-native unit testing framework. It is fast by design, reusing Vite's configuration and transformation pipeline. Vitest cold startup time is typically around 120ms, significantly faster than Jest due to native ESM and no Babel transform step. Watch mode in Vitest is near-instant because it leverages Vite's HMR infrastructure — only changed modules and their dependents are re-run. TypeScript support is native and zero-config; Vitest processes TypeScript directly without a separate plugin. ESM support is first-class with no extra configuration required. Snapshot testing is built in and compatible with Jest snapshots. Parallel execution is supported via worker threads and child processes. Vitest has approximately 15 million weekly downloads on npm. Vitest is maintained by the Vite and Vue core team. Compatible with Jest's API surface, making migration straightforward. Used by Nuxt, SvelteKit, and many projects in the Vite ecosystem.",
+  "fetch_method": "webfetch"
+}

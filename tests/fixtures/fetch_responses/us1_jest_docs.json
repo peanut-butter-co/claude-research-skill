@@ -1,0 +1,7 @@
+{
+  "url": "https://jestjs.io/docs/getting-started",
+  "ok": true,
+  "status_code": 200,
+  "content": "Jest is a JavaScript testing framework designed to ensure correctness of any JavaScript codebase. It allows you to write tests with an approachable, familiar and feature-rich API that gives you results quickly. Jest startup time is approximately 800ms for a medium-sized project due to Babel transform overhead; using ts-jest or the SWC transformer reduces this significantly. Jest supports TypeScript via babel-jest or ts-jest; Jest 29 introduced improved TypeScript support. ESM support is experimental and requires additional configuration flags. Jest has pioneered snapshot testing in the JavaScript ecosystem — built-in snapshot testing requires no additional dependencies. Tests run in parallel via worker processes by default, with the number of workers configurable via the --workers flag. Weekly downloads exceed 50 million on npm, making it the most downloaded JavaScript testing framework. Jest is maintained by Meta (formerly Facebook) open source team. Notable users include Meta, Airbnb, Twitter, and Spotify.",
+  "fetch_method": "webfetch"
+}

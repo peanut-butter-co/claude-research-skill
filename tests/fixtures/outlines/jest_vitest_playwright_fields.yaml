@@ -1,0 +1,14 @@
+categories:
+  performance:
+    - startup_time
+    - watch_mode_speed
+  features:
+    - typescript_support
+    - esm_support
+    - snapshot_testing
+    - parallel_execution
+  ecosystem:
+    - weekly_downloads
+    - active_maintenance
+    - notable_users
+detail: moderate

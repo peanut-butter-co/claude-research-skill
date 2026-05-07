@@ -1,0 +1,25 @@
+# SC-005 mode-detection accuracy fixture
+# expected_mode: "comparative" | "narrative"
+# For narrative topics: detect_mode_fast returns mode=None (falls through to LLM).
+# The test treats mode=None as correct for narrative topics.
+topics:
+  - topic: "compare jest, vitest, and playwright for unit testing speed"
+    expected_mode: "comparative"
+  - topic: "jest vs vitest vs mocha — which is fastest?"
+    expected_mode: "comparative"
+  - topic: "best 5 vector databases for production RAG"
+    expected_mode: "comparative"
+  - topic: "alternatives to Webpack for React projects"
+    expected_mode: "comparative"
+  - topic: "differences between PostgreSQL and MySQL for OLTP"
+    expected_mode: "comparative"
+  - topic: "how does transformer attention work under the hood"
+    expected_mode: "narrative"
+  - topic: "what is the current state of open-source LLM fine-tuning"
+    expected_mode: "narrative"
+  - topic: "why did SVB collapse so quickly in March 2023"
+    expected_mode: "narrative"
+  - topic: "explain how Kubernetes pod scheduling works"
+    expected_mode: "narrative"
+  - topic: "what impact does the EU AI Act have on SaaS startups"
+    expected_mode: "narrative"

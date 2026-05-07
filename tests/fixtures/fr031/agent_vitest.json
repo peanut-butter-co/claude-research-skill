@@ -1,0 +1,17 @@
+{
+  "item": "vitest",
+  "fields": {
+    "esm_support": {
+      "value": "Native ESM support out of the box",
+      "sources": [
+        {"url": "https://vitest.dev/guide/", "title": "Vitest Guide", "tier": "A", "date": "2024-06-01"}
+      ]
+    }
+  },
+  "_meta": {
+    "agent_id": "vitest-001",
+    "hints_received": [
+      {"from_agent": "jest", "entity": "ESM", "context": "Jest has partial ESM support via experimental flag"}
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "item": "playwright",
+  "fields": {
+    "startup_time": {
+      "value": "[uncertain]",
+      "sources": [
+        {"url": "https://playwright.dev/docs/intro", "title": "Playwright Introduction", "tier": "A", "date": "2024-01-20", "fetch_method": "webfetch", "extraction_failed": false},
+        {"url": "https://dev.to/bob/playwright-e2e-speed", "title": "How fast is Playwright for E2E tests?", "tier": "C", "date": "2023-11-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "watch_mode_speed": {
+      "value": "[uncertain]",
+      "sources": [
+        {"url": "https://playwright.dev/docs/test-ui-mode", "title": "Playwright UI Mode", "tier": "A", "date": "2024-01-20", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "typescript_support": {
+      "value": "First-class, built-in type definitions; no additional configuration required",
+      "sources": [
+        {"url": "https://playwright.dev/docs/test-typescript", "title": "Playwright TypeScript", "tier": "A", "date": "2024-01-20", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "esm_support": {
+      "value": "Yes, follows Node.js and browser native ESM",
+      "sources": [
+        {"url": "https://playwright.dev/docs/release-notes", "title": "Playwright Release Notes", "tier": "A", "date": "2024-03-20", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "snapshot_testing": {
+      "value": "Visual snapshots only (screenshot pixel diffs); not equivalent to Jest/Vitest serialized value snapshots",
+      "sources": [
+        {"url": "https://playwright.dev/docs/test-snapshots", "title": "Playwright Visual Comparisons", "tier": "A", "date": "2024-01-20", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "parallel_execution": {
+      "value": "Yes, sharded and worker-based; parallel across multiple browser workers by default",
+      "sources": [
+        {"url": "https://playwright.dev/docs/test-parallel", "title": "Playwright Parallelism", "tier": "A", "date": "2024-01-20", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "weekly_downloads": {
+      "value": "~5M per week on npm (@playwright/test)",
+      "sources": [
+        {"url": "https://npmjs.com/package/@playwright/test", "title": "@playwright/test - npm", "tier": "B", "date": "2024-03-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "active_maintenance": {
+      "value": "Yes, actively maintained by Microsoft; frequent releases",
+      "sources": [
+        {"url": "https://github.com/microsoft/playwright", "title": "microsoft/playwright GitHub", "tier": "B", "date": "2024-03-20", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "notable_users": {
+      "value": "Microsoft, VS Code team, Vercel, GitHub",
+      "sources": [
+        {"url": "https://playwright.dev/", "title": "Playwright Home", "tier": "A", "date": "2024-01-20", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    }
+  },
+  "uncertain": ["startup_time", "watch_mode_speed"],
+  "pruned": false,
+  "emergent_threads_chased": [],
+  "proposed_extensions": [
+    "Playwright is primarily an E2E tool — comparing startup_time with unit test runners (Jest, Vitest) is not a meaningful metric; consider adding an e2e_vs_unit_scope field"
+  ],
+  "budget_consumed": 10,
+  "budget_exhausted": false,
+  "_meta": {
+    "agent_run": "2026-05-07T10:10:00",
+    "hints_received": []
+  }
+}

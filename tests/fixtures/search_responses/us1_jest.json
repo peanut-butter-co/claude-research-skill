@@ -1,0 +1,35 @@
+{
+  "query": "jest javascript testing framework benchmark",
+  "results": [
+    {
+      "url": "https://jestjs.io/docs/getting-started",
+      "title": "Getting Started · Jest",
+      "snippet": "Jest is a JavaScript testing framework with a focus on simplicity. It works with projects using Babel, TypeScript, Node, React, Angular, Vue and more.",
+      "date": "2024-01-15"
+    },
+    {
+      "url": "https://npmjs.com/package/jest",
+      "title": "jest - npm",
+      "snippet": "Jest has 50M+ weekly downloads on npm. Startup time ~800ms for medium-sized projects. Maintained by Meta.",
+      "date": "2024-03-01"
+    },
+    {
+      "url": "https://github.com/jestjs/jest",
+      "title": "jestjs/jest: Delightful JavaScript Testing - GitHub",
+      "snippet": "Jest is a delightful JavaScript Testing Framework with a focus on simplicity. 44k stars on GitHub. Active maintenance by Meta open source team.",
+      "date": "2024-03-10"
+    },
+    {
+      "url": "https://medium.com/@user/jest-performance-2024",
+      "title": "Jest performance tips in 2024",
+      "snippet": "Jest startup can be slow due to Babel transform overhead. Switching to SWC or ts-jest can reduce startup from 800ms to ~300ms.",
+      "date": "2023-06-01"
+    },
+    {
+      "url": "https://dev.to/alex/jest-vs-vitest-2024",
+      "title": "Jest vs Vitest in 2024 — which should you choose?",
+      "snippet": "Jest remains the most downloaded JS testing framework but Vitest is gaining fast in the Vite ecosystem. Jest is harder to configure for ESM.",
+      "date": "2024-02-10"
+    }
+  ]
+}

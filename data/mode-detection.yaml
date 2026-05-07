@@ -1,0 +1,97 @@
+# mode-detection.yaml
+# FR-004: Research mode auto-detection configuration
+#
+# Schema:
+#   keywords.comparative: fast-path regexes — any match → mode=comparative, skip LLM
+#   keywords.narrative:   fast-path regexes — any match → mode=narrative, skip LLM
+#   threshold:            LLM confidence threshold; below this value → AskUserQuestion
+#   classification_prompt: sent to LLM when no fast-path match; expects JSON response
+#
+# Algorithm (FR-004):
+#   (a) Keyword fast-path: if topic matches any comparative regex → mode=comparative, done
+#   (b) Keyword fast-path: if topic matches any narrative regex → mode=narrative, done
+#   (c) LLM fallback: send classification_prompt; parse {"mode", "confidence", "reasoning"}
+#   (d) If confidence >= threshold → accept mode; else → AskUserQuestion with two options
+---
+threshold: 0.75
+
+keywords:
+  comparative:
+    # Direct comparison verbs and conjunctions
+    - "(?i)\\bcompare\\b"
+    - "(?i)\\bvs\\.?\\b"
+    - "(?i)\\bversus\\b"
+    # Ranked list patterns ("best 5 frameworks", "top 3 tools")
+    - "(?i)\\b(?:best|top)\\s+\\d+\\b"
+    # "X alternatives to Y" / "alternatives to X"
+    - "(?i)\\balternatives?\\s+to\\b"
+    # "differences between X and Y"
+    - "(?i)\\bdifferences?\\s+between\\b"
+    # Evaluation / assessment requests
+    - "(?i)\\bevaluate\\b"
+    # Explicit enumerated list of 2+ named items (comma-separated or "X, Y, and Z")
+    - "(?i)(?:[\\w.+-]+(?:\\s*,\\s*[\\w.+-]+)+\\s*(?:,?\\s*(?:and|or)\\s+[\\w.+-]+)?)"
+    # "which is better / which should I use"
+    - "(?i)\\bwhich\\s+(?:is\\s+)?(?:better|faster|cheaper|more|best|worse|preferred)\\b"
+    # "pros and cons"
+    - "(?i)\\bpros\\s+(?:and|&)\\s+cons\\b"
+
+  narrative:
+    # "how does X work"
+    - "(?i)\\bhow\\s+does\\b"
+    # "what is / what are / what was / what were"
+    - "(?i)\\bwhat\\s+(?:is|are|was|were)\\b"
+    # "why did / why does / why is"
+    - "(?i)\\bwhy\\s+(?:did|does|is|are|was|were)\\b"
+    # "explain X" / "explain how"
+    - "(?i)\\bexplain\\b"
+    # "history of X" / "evolution of X"
+    - "(?i)\\b(?:history|evolution|origin|background)\\s+of\\b"
+
+classification_prompt: |
+  You are classifying a research topic into one of two modes:
+
+  **comparative** — the topic asks for a structured comparison across two or more explicitly defined items
+  (tools, products, approaches, frameworks, etc.). The output would naturally be a side-by-side table,
+  a ranked list, or a pros-and-cons breakdown for each named item.
+
+  **narrative** — the topic asks for an open-ended investigation of a question, phenomenon, concept,
+  or domain. The output would naturally be a flowing explanation, a deep-dive report, or an analysis
+  of causes, mechanisms, or implications.
+
+  ## Examples
+
+  Comparative (high confidence):
+  1. "Compare Vite, Webpack, and esbuild for a large React monorepo"
+     → {"mode": "comparative", "confidence": 0.97, "reasoning": "Three named build tools explicitly listed for comparison"}
+  2. "Best 5 vector databases for production RAG in 2025"
+     → {"mode": "comparative", "confidence": 0.93, "reasoning": "Ranked-list request over a named technology category"}
+  3. "Jest vs Vitest vs Playwright — which is fastest for unit tests?"
+     → {"mode": "comparative", "confidence": 0.98, "reasoning": "Three named tools with explicit 'which is fastest' evaluative question"}
+
+  Narrative (high confidence):
+  1. "How does transformer attention actually work under the hood?"
+     → {"mode": "narrative", "confidence": 0.95, "reasoning": "Open-ended mechanistic question; no defined set of items to compare"}
+  2. "Why did SVB collapse so quickly in March 2023?"
+     → {"mode": "narrative", "confidence": 0.96, "reasoning": "Causal investigation of a single historical event"}
+  3. "What is the current state of open-source LLM fine-tuning?"
+     → {"mode": "narrative", "confidence": 0.91, "reasoning": "Landscape/survey question about a domain, not a head-to-head comparison"}
+
+  ## Ambiguous cases
+
+  Some topics could go either way. For example, "Python vs JavaScript for ML" is clearly comparative (0.95),
+  but "What are the trade-offs of serverless architectures?" sits closer to narrative (0.72) because no
+  specific named alternatives are enumerated. When uncertain, return a confidence between 0.50 and 0.74
+  to signal that the user should be asked to confirm.
+
+  ## Task
+
+  Classify the following research topic. Respond with a single JSON object and nothing else:
+
+  {
+    "mode": "comparative" | "narrative",
+    "confidence": <float between 0.0 and 1.0>,
+    "reasoning": "<one sentence explaining the classification>"
+  }
+
+  Research topic: {topic}

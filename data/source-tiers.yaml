@@ -1,0 +1,309 @@
+# source-tiers.yaml
+# Schema: domain → {tier: A|B|C|D, notes?: str}
+# Tiers: A = peer-reviewed / primary source; B = established reference press;
+#        C = community / secondary; D = low-quality / SEO farm
+---
+domains:
+
+  # ─── Tier A: Academic publishers & peer-reviewed sources ───────────────────
+
+  nature.com:
+    tier: A
+    notes: "Nature Publishing Group — flagship multidisciplinary peer-reviewed journal"
+
+  science.org:
+    tier: A
+    notes: "AAAS Science — top-tier peer-reviewed multidisciplinary journal"
+
+  springer.com:
+    tier: A
+    notes: "Springer — large peer-reviewed academic publisher (Springer Nature group)"
+
+  springerlink.com:
+    tier: A
+    notes: "SpringerLink — Springer's primary article portal for peer-reviewed content"
+
+  sciencedirect.com:
+    tier: A
+    notes: "ScienceDirect — Elsevier's peer-reviewed journal and book platform"
+
+  elsevier.com:
+    tier: A
+    notes: "Elsevier — major academic publisher, hosts hundreds of peer-reviewed journals"
+
+  cell.com:
+    tier: A
+    notes: "Cell Press — Elsevier imprint; flagship Cell journal and family (Cell, Neuron, etc.)"
+
+  thelancet.com:
+    tier: A
+    notes: "The Lancet — Elsevier imprint; leading peer-reviewed medical journal"
+
+  plos.org:
+    tier: A
+    notes: "PLOS — open-access peer-reviewed publisher (PLOS ONE, PLOS Biology, etc.)"
+
+  pnas.org:
+    tier: A
+    notes: "PNAS — Proceedings of the National Academy of Sciences; peer-reviewed"
+
+  wiley.com:
+    tier: A
+    notes: "Wiley — major academic publisher; broad peer-reviewed journal portfolio"
+
+  onlinelibrary.wiley.com:
+    tier: A
+    notes: "Wiley Online Library — Wiley's primary peer-reviewed article portal"
+
+  acs.org:
+    tier: A
+    notes: "American Chemical Society — peer-reviewed chemistry journals (JACS, etc.)"
+
+  pubs.acs.org:
+    tier: A
+    notes: "ACS Publications — ACS peer-reviewed journal portal"
+
+  ieee.org:
+    tier: A
+    notes: "IEEE — leading peer-reviewed electrical engineering and computing standards body"
+
+  ieeexplore.ieee.org:
+    tier: A
+    notes: "IEEE Xplore — IEEE's peer-reviewed article and conference-paper portal"
+
+  dl.acm.org:
+    tier: A
+    notes: "ACM Digital Library — ACM peer-reviewed CS and IT publications"
+
+  academic.oup.com:
+    tier: A
+    notes: "Oxford Academic — Oxford University Press peer-reviewed journal portal"
+
+    # also covered by oup.com umbrella
+  oup.com:
+    tier: A
+    notes: "Oxford University Press — top academic publisher, books and journals"
+
+  cambridge.org:
+    tier: A
+    notes: "Cambridge University Press — peer-reviewed journals and academic books"
+
+  mitpress.mit.edu:
+    tier: A
+    notes: "MIT Press — peer-reviewed academic books and journals"
+
+  arxiv.org:
+    tier: A
+    notes: "arXiv — open-access preprint server (physics, maths, CS, econ); not peer-reviewed but primary source"
+
+  pubmed.ncbi.nlm.nih.gov:
+    tier: A
+    notes: "PubMed — NLM/NCBI index of peer-reviewed biomedical literature"
+
+  ncbi.nlm.nih.gov:
+    tier: A
+    notes: "NCBI — NIH's bioinformatics and biomedical research databases"
+
+  jstor.org:
+    tier: A
+    notes: "JSTOR — digital library of peer-reviewed academic journals and primary sources"
+
+  taylorandfrancis.com:
+    tier: A
+    notes: "Taylor & Francis — large academic publisher; Routledge and T&F journals"
+
+  tandfonline.com:
+    tier: A
+    notes: "Taylor & Francis Online — T&F peer-reviewed article portal"
+
+  sagepub.com:
+    tier: A
+    notes: "SAGE Publications — peer-reviewed journals in social sciences and humanities"
+
+  bmj.com:
+    tier: A
+    notes: "The BMJ (British Medical Journal) — peer-reviewed general medical journal"
+
+  biomedcentral.com:
+    tier: A
+    notes: "BioMed Central — Springer Nature open-access peer-reviewed publisher"
+
+  # ─── Tier B: Established reference press ───────────────────────────────────
+
+  nytimes.com:
+    tier: B
+    notes: "New York Times — US newspaper of record; rigorous editorial standards"
+
+  ft.com:
+    tier: B
+    notes: "Financial Times — leading global financial and business newspaper"
+
+  bloomberg.com:
+    tier: B
+    notes: "Bloomberg — authoritative financial news and data"
+
+  economist.com:
+    tier: B
+    notes: "The Economist — weekly global current-affairs and economics magazine"
+
+  reuters.com:
+    tier: B
+    notes: "Reuters — global wire service; primary source for breaking news"
+
+  apnews.com:
+    tier: B
+    notes: "AP News — Associated Press wire service; primary factual reporting"
+
+  bbc.com:
+    tier: B
+    notes: "BBC — UK public broadcaster; rigorous editorial standards"
+
+  bbc.co.uk:
+    tier: B
+    notes: "BBC (UK domain) — same editorial entity as bbc.com"
+
+  theguardian.com:
+    tier: B
+    notes: "The Guardian — major UK broadsheet with global coverage"
+
+  washingtonpost.com:
+    tier: B
+    notes: "Washington Post — major US newspaper; strong investigative journalism"
+
+  wsj.com:
+    tier: B
+    notes: "Wall Street Journal — leading US business and financial newspaper"
+
+  lemonde.fr:
+    tier: B
+    notes: "Le Monde — French newspaper of record"
+
+  spiegel.de:
+    tier: B
+    notes: "Der Spiegel — leading German news magazine; rigorous investigative reporting"
+
+  theatlantic.com:
+    tier: B
+    notes: "The Atlantic — long-form US journalism and analysis"
+
+  foreignaffairs.com:
+    tier: B
+    notes: "Foreign Affairs — CFR journal; authoritative international relations analysis"
+
+  sciencenews.org:
+    tier: B
+    notes: "Science News — independent science journalism; rigorous but accessible"
+
+  technologyreview.com:
+    tier: B
+    notes: "MIT Technology Review — authoritative technology journalism from MIT"
+
+  wired.com:
+    tier: B
+    notes: "Wired — established technology and culture magazine (Condé Nast)"
+
+  arstechnica.com:
+    tier: B
+    notes: "Ars Technica — in-depth technology reporting; strong editorial standards (Condé Nast)"
+
+  techcrunch.com:
+    tier: B
+    notes: "TechCrunch — startup and tech industry news (Yahoo/Apollo)"
+
+  # ─── Additional Tier B: Other strong reference outlets ─────────────────────
+
+  nature.com/news:
+    tier: B
+    notes: "Nature News — news and analysis section of Nature; editorially separate from research"
+
+  scientificamerican.com:
+    tier: B
+    notes: "Scientific American — accessible science journalism; Springer Nature"
+
+  newyorker.com:
+    tier: B
+    notes: "The New Yorker — long-form journalism and criticism; Condé Nast"
+
+  politico.com:
+    tier: B
+    notes: "Politico — authoritative US political news and analysis"
+
+  # ─── Tier C: Community / secondary sources ─────────────────────────────────
+
+  wikipedia.org:
+    tier: C
+    notes: "Wikipedia — community-edited encyclopedia; useful for overview and citations, not primary source"
+
+  reddit.com:
+    tier: C
+    notes: "Reddit — community discussion; valuable for crowd-sourced perspectives, low factual authority"
+
+  medium.com:
+    tier: C
+    notes: "Medium — self-publishing platform; quality varies widely by author"
+
+  substack.com:
+    tier: C
+    notes: "Substack — newsletter platform; quality varies by author; no editorial gate"
+
+  quora.com:
+    tier: C
+    notes: "Quora — community Q&A; low editorial standards, variable expert quality"
+
+  hackernews.ycombinator.com:
+    tier: C
+    notes: "Hacker News — tech-community discussion; high-signal for tech topics but no editorial review"
+
+  news.ycombinator.com:
+    tier: C
+    notes: "Hacker News (canonical domain) — same as hackernews.ycombinator.com"
+
+  # ─── Tier D: Low-quality / SEO farms / content aggregators ────────────────
+
+  answers.com:
+    tier: D
+    notes: "Answers.com — content farm; thin AI-generated or scraped Q&A content"
+
+  ehow.com:
+    tier: D
+    notes: "eHow — Leaf Group content farm; low-depth how-to articles"
+
+  livestrong.com:
+    tier: D
+    notes: "Livestrong — Leaf Group health content farm; known for thin SEO content"
+
+  reference.com:
+    tier: D
+    notes: "Reference.com — content aggregator/farm with minimal editorial oversight"
+
+  brighthub.com:
+    tier: D
+    notes: "Bright Hub — legacy content farm; thin, SEO-optimised articles"
+
+  examiner.com:
+    tier: D
+    notes: "Examiner.com (defunct/archived) — former citizen-journalism content farm"
+
+  hubpages.com:
+    tier: D
+    notes: "HubPages — user-generated content farm; low editorial standards"
+
+  ezinearticles.com:
+    tier: D
+    notes: "EzineArticles — article directory / content farm; spammy backlink ecosystem"
+
+  articlesbase.com:
+    tier: D
+    notes: "ArticlesBase — article directory; minimal editorial review, SEO spam"
+
+  suite101.com:
+    tier: D
+    notes: "Suite101 — defunct content farm; archived pages may still rank"
+
+  buzzle.com:
+    tier: D
+    notes: "Buzzle — content farm; thin articles across broad topic range"
+
+  iloveindia.com:
+    tier: D
+    notes: "iLoveIndia — lifestyle content farm; thin SEO-driven articles"

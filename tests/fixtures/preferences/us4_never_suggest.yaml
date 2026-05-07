@@ -1,0 +1,6 @@
+never_suggest:
+  - signature:
+      - entity:local_business
+      - google_places
+    integration_id: google_places
+    recorded_at: "2026-05-07T10:00:00+00:00"

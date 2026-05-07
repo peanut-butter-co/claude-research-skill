@@ -1,0 +1,36 @@
+{
+  "subquery": "Are there SME exemptions or reduced obligations in the EU AI Act?",
+  "fields": {
+    "summary": {
+      "value": "The EU AI Act includes provisions for SMEs in Article 62, which allows member states to establish regulatory sandboxes with reduced compliance burden. Micro and small enterprises can benefit from simplified technical documentation requirements. However, these provisions do not apply to high-risk AI system providers.",
+      "sources": [
+        {
+          "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689",
+          "title": "Regulation (EU) 2024/1689 — EUR-Lex",
+          "tier": "A",
+          "date": "2024-06-13",
+          "fetch_method": "webfetch",
+          "extraction_failed": false
+        },
+        {
+          "url": "https://artificialintelligenceact.eu/article/52/",
+          "title": "Article 52 - EU AI Act",
+          "tier": "B",
+          "date": "2024-07-10",
+          "fetch_method": "webfetch",
+          "extraction_failed": false
+        }
+      ]
+    }
+  },
+  "uncertain": [],
+  "pruned": false,
+  "emergent_threads_chased": [],
+  "proposed_extensions": [],
+  "budget_consumed": 6,
+  "budget_exhausted": false,
+  "_meta": {
+    "agent_run": "2026-05-07T10:00:00",
+    "hints_received": []
+  }
+}

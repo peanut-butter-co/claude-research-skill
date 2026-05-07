@@ -1,0 +1,18 @@
+mode: comparative
+topic: "compare 5 JS testing frameworks"
+items:
+  - jest
+  - vitest
+  - playwright
+  - mocha
+  - jasmine
+fields_file: fields.yaml
+config:
+  items_per_batch: 1
+  social_signal: true
+  rigor: standard
+  query_budget: 15
+  max_emergent_threads: 2
+  extension_budget: 5
+  include_tier_d: false
+  topic_integrations: []

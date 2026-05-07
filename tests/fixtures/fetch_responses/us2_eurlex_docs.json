@@ -1,0 +1,6 @@
+{
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689",
+  "content": "REGULATION (EU) 2024/1689 OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 13 June 2024 laying down harmonised rules on artificial intelligence (Artificial Intelligence Act). Article 52: Transparency obligations for certain AI systems. 1. Providers shall ensure that AI systems intended to interact with natural persons are designed and developed in such a way that the natural persons concerned are informed that they are interacting with an AI system, unless this is obvious from the context and the circumstances of use. Article 62: Measures for providers and deployers, in particular SMEs, including start-ups. 1. Member States shall take the following actions: (a) provide SMEs and start-ups that have a registered office or a branch in the Union with priority access to the AI regulatory sandboxes; (b) organise specific awareness-raising activities about the application of this Regulation tailored to the needs of SMEs and start-ups.",
+  "status_code": 200,
+  "fetch_method": "webfetch"
+}

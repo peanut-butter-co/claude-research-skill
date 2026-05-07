@@ -1,0 +1,70 @@
+{
+  "item": "jasmine",
+  "fields": {
+    "startup_time": {
+      "value": "~400ms; no Babel overhead but slower than Vitest due to no Vite pipeline",
+      "sources": [
+        {"url": "https://jasmine.github.io/pages/getting_started.html", "title": "Jasmine Getting Started", "tier": "A", "date": "2024-01-05", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "watch_mode_speed": {
+      "value": "Requires jasmine-runner or external watcher (e.g. nodemon); no built-in watch mode",
+      "sources": [
+        {"url": "https://jasmine.github.io/setup/nodejs.html", "title": "Jasmine Node.js Setup", "tier": "A", "date": "2024-01-05", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "typescript_support": {
+      "value": "Requires @types/jasmine and a TypeScript compiler step (ts-node or tsc); not zero-config",
+      "sources": [
+        {"url": "https://jasmine.github.io/tutorials/typescript.html", "title": "Jasmine TypeScript Tutorial", "tier": "A", "date": "2024-01-05", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "esm_support": {
+      "value": "Limited; primarily targets CommonJS; partial ESM support added in recent versions",
+      "sources": [
+        {"url": "https://jasmine.github.io/tutorials/es_modules.html", "title": "Jasmine ES Modules", "tier": "A", "date": "2024-01-05", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "snapshot_testing": {
+      "value": "Not natively supported; requires third-party plugins such as jasmine-snapshot",
+      "sources": [
+        {"url": "https://npmjs.com/package/jasmine-snapshot", "title": "jasmine-snapshot - npm", "tier": "B", "date": "2022-06-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "parallel_execution": {
+      "value": "Not natively supported; sequential execution by default; requires external tooling for parallelism",
+      "sources": [
+        {"url": "https://jasmine.github.io/api/edge/Jasmine.html", "title": "Jasmine API Reference", "tier": "A", "date": "2024-01-05", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "weekly_downloads": {
+      "value": "~2.5M per week on npm; declining from peak — many teams migrated to Jest",
+      "sources": [
+        {"url": "https://npmjs.com/package/jasmine", "title": "jasmine - npm", "tier": "B", "date": "2024-03-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "active_maintenance": {
+      "value": "Slower release cadence than Jest or Vitest; maintained by a small open source team",
+      "sources": [
+        {"url": "https://github.com/jasmine/jasmine", "title": "jasmine/jasmine GitHub", "tier": "B", "date": "2024-02-10", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "notable_users": {
+      "value": "Angular (Angular CLI still defaults to Jasmine); Karma test runner integration",
+      "sources": [
+        {"url": "https://jasmine.github.io/pages/getting_started.html", "title": "Jasmine Getting Started", "tier": "A", "date": "2024-01-05", "fetch_method": "webfetch", "extraction_failed": false},
+        {"url": "https://medium.com/@dev/jasmine-vs-jest-2024", "title": "Is Jasmine still worth using in 2024?", "tier": "C", "date": "2023-12-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    }
+  },
+  "uncertain": [],
+  "pruned": false,
+  "emergent_threads_chased": [],
+  "proposed_extensions": [],
+  "budget_consumed": 9,
+  "budget_exhausted": false,
+  "_meta": {
+    "agent_run": "2026-05-07T10:20:00",
+    "hints_received": []
+  }
+}

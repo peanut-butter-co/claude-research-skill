@@ -1,0 +1,143 @@
+---
+# topic-integrations.yaml
+# Schema: id → {triggers: [regex|tag], description: str, setup_url: str, adapter_module: str}
+# triggers[]: list of Python regex patterns or entity-type tags.
+#   - Regex patterns: matched against the raw topic prompt (re.search, case-insensitive where flag is set).
+#   - entity: tags: matched against the inferred entity type emitted by the topic classifier.
+# A topic activates an integration if ANY trigger matches.
+# adapter_module: dotted path under scripts/integrations/ ("tbd" = catalog-only, adapter not yet implemented).
+#
+# _meta.entity_types: canonical entity-type tags recognised by the topic classifier.
+# _meta.schema_version: semver for this file's structure.
+
+_meta:
+  schema_version: "1.0.0"
+  description: "Catalog of topic-driven data-source integrations for the research skill."
+  entity_types:
+    - entity:local_business
+    - entity:software_library
+    - entity:academic_paper
+    - entity:startup
+    - entity:public_company
+    - entity:private_company
+    - entity:financial_instrument
+    - entity:person
+    - entity:news_event
+    - entity:patent
+    - entity:video_content
+    - entity:creator
+
+integrations:
+
+  google_places:
+    triggers:
+      - "(?i)\\b(restaurant|shop|store|hotel|bar|cafe|coffee|venue|place|attraction|clinic|gym|salon|spa)s?\\b"
+      - "(?i)\\bbest\\s+\\w+\\s+in\\s+[A-Z][a-z]+"
+      - "(?i)\\b(near|around|in)\\s+[A-Z][a-z]+(?:\\s+[A-Z][a-z]+)?"
+      - "(?i)\\b(local|nearby|neighborhood|city|town|district)\\b"
+      - "entity:local_business"
+    description: "Google Places API — adds structured local business data (ratings, hours, addresses, review counts) for location-based and 'best X in [city]' topics."
+    setup_url: "https://developers.google.com/maps/documentation/places/web-service/get-api-key"
+    adapter_module: "scripts.integrations.google_places"
+
+  github:
+    triggers:
+      - "(?i)\\b(library|framework|sdk|cli|tool|plugin|package|repo|repository|open.?source|npm|pypi|crate|gem)s?\\b"
+      - "(?i)\\b(github|gitlab|open.?source|developer.?tool|devtool|developer.?stack)\\b"
+      - "(?i)\\b(stars|forks|contributors|commit|release|version|changelog|license|maintained)s?\\b"
+      - "(?i)\\b(compare|vs\\.?|versus)\\s+\\w+\\s+(library|framework|sdk|tool|package)\\b"
+      - "entity:software_library"
+    description: "GitHub REST API — adds repository metadata (stars, forks, activity, license, contributors) for open-source tool and library comparison topics."
+    setup_url: "https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api"
+    adapter_module: "scripts.integrations.github"
+
+  semantic_scholar:
+    triggers:
+      - "(?i)\\b(paper|papers|research|study|studies|journal|proceedings|arxiv|pubmed|citation|cited|peer.?reviewed)\\b"
+      - "(?i)\\b(academic|scientific|literature|review|meta.?analysis|survey|findings|empirical)\\b"
+      - "(?i)\\b(university|professor|researcher|scientist|PhD|thesis|dissertation)\\b"
+      - "(?i)\\b(published|preprint|doi|abstract|methodology|hypothesis|experiment)\\b"
+      - "entity:academic_paper"
+    description: "Semantic Scholar API — adds academic paper metadata (abstracts, citation counts, authors, year) for research and scientific-literature topics."
+    setup_url: "https://www.semanticscholar.org/product/api"
+    adapter_module: "scripts.integrations.semantic_scholar"
+
+  crunchbase:
+    triggers:
+      - "(?i)\\b(startup|startups|founder|founding|seed|series\\s+[a-e]|venture|vc|investor|angels?|fundrais|valuation)\\b"
+      - "(?i)\\b(funding.?round|raised|acqui|acquisition|merger|ipo|unicorn|decacorn)\\b"
+      - "(?i)\\b(portfolio|accelerator|incubator|y.?combinator|techstars|sequoia|a16z|andreessen)\\b"
+      - "(?i)\\b(launch|pivot|exit|scale|growth.?stage|early.?stage|late.?stage)\\b"
+      - "entity:startup"
+      - "entity:private_company"
+    description: "Crunchbase API — adds funding rounds, investor lists, founding dates, and company profiles for startup and venture-capital research topics."
+    setup_url: "https://data.crunchbase.com/docs/crunchbase-basic-using-the-api"
+    adapter_module: "scripts.integrations.crunchbase"
+
+  exa:
+    triggers:
+      - "(?i)\\b(search|find|discover|explore|overview|landscape|survey|comprehensive|deep.?dive)\\b"
+      - "(?i)\\b(latest|recent|current|up.?to.?date|2024|2025|2026)\\b"
+      - "(?i)\\b(what is|who is|how does|why does|explain|summarize|compare)\\b"
+      - "(?i).*"
+    description: "Exa neural web search — high-quality semantic web retrieval for any topic; preferred over keyword search for nuanced or exploratory queries."
+    setup_url: "https://docs.exa.ai/reference/getting-started"
+    adapter_module: "scripts.integrations.exa"
+
+  youtube_data:
+    triggers:
+      - "(?i)\\b(youtube|video|channel|creator|tutorial|review|vlog|podcast|streaming|streamer)s?\\b"
+      - "(?i)\\b(watch|views|subscribers|subscriber.?count|viral|trending|shorts)\\b"
+      - "(?i)\\b(how.?to|walkthrough|demo|explainer|course|lesson|lecture)\\b"
+      - "(?i)\\b(influencer|content.?creator|youtuber|tiktoker|broadcaster)\\b"
+      - "entity:video_content"
+      - "entity:creator"
+    description: "YouTube Data API — adds video metadata (views, likes, publish date, channel stats) for video-content and creator-research topics; complements /last30days social signals."
+    setup_url: "https://developers.google.com/youtube/v3/getting-started"
+    adapter_module: "scripts.integrations.youtube_data"
+
+  newsapi:
+    triggers:
+      - "(?i)\\b(news|breaking|headline|coverage|media|press|journalist|report|reported|article)s?\\b"
+      - "(?i)\\b(recent|today|this week|this month|latest|developing|ongoing|crisis|incident|event)\\b"
+      - "(?i)\\b(bbc|reuters|ap news|new york times|wsj|bloomberg|techcrunch|wired)\\b"
+      - "(?i)\\b(scandal|controversy|recall|lawsuit|regulation|policy|government|election)\\b"
+      - "entity:news_event"
+    description: "NewsAPI — fetches recent news articles and media coverage from 150k+ sources for current-events, breaking-news, and PR/reputation analysis topics."
+    setup_url: "https://newsapi.org/docs/get-started"
+    adapter_module: "scripts.integrations.newsapi"
+
+  alpha_vantage:
+    triggers:
+      - "(?i)\\b(stock|stocks|ticker|share|equity|etf|index|s&p|nasdaq|nyse|dow)\\b"
+      - "(?i)\\b(earnings|revenue|profit|eps|pe.?ratio|market.?cap|dividend|quarterly|annual.?report)\\b"
+      - "(?i)\\b(invest|investor|portfolio|asset|securities|bond|commodity|forex|currency)\\b"
+      - "(?i)\\b(financial|financials|balance.?sheet|cash.?flow|income.?statement|10.?k|10.?q)\\b"
+      - "entity:financial_instrument"
+      - "entity:public_company"
+    description: "Alpha Vantage API — adds stock prices, financial statements, earnings data, and technical indicators for public-company and investment-research topics."
+    setup_url: "https://www.alphavantage.co/support/#api-key"
+    adapter_module: "scripts.integrations.alpha_vantage"
+
+  opencorporates:
+    triggers:
+      - "(?i)\\b(company|companies|corporation|incorporated|ltd|llc|gmbh|registered|registration|registry)\\b"
+      - "(?i)\\b(director|officer|registered.?agent|company.?number|companies.?house|sec.?filing)\\b"
+      - "(?i)\\b(subsidiary|subsidiaries|parent.?company|holding|conglomerate|corporate.?structure)\\b"
+      - "(?i)\\b(due.?diligence|background.?check|corporate.?profile|beneficial.?owner)\\b"
+      - "entity:private_company"
+      - "entity:public_company"
+    description: "OpenCorporates API — adds official company registry data (incorporation dates, officer names, jurisdictions, filing history) for corporate-structure and due-diligence topics."
+    setup_url: "https://api.opencorporates.com/documentation/API-Reference"
+    adapter_module: "scripts.integrations.opencorporates"
+
+  patents_google:
+    triggers:
+      - "(?i)\\b(patent|patents|ip|intellectual.?property|trademark|copyright|prior.?art|invention)\\b"
+      - "(?i)\\b(patented|filing|filed|granted|assignee|inventor|claims?|embodiment|specification)\\b"
+      - "(?i)\\b(patent.?landscape|freedom.?to.?operate|fto|infringement|litigation|ipr|wipo|uspto|epo)\\b"
+      - "(?i)\\b(technology.?licensing|royalty|patent.?pool|standard.?essential.?patent|sep)\\b"
+      - "entity:patent"
+    description: "Google Patents API (via SerpAPI) — retrieves patent documents, filing metadata, assignee history, and citation graphs for IP-landscape and prior-art research topics."
+    setup_url: "https://serpapi.com/google-patents-api"
+    adapter_module: "scripts.integrations.patents_google"

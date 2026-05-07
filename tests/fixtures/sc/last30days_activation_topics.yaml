@@ -1,0 +1,45 @@
+# SC-006 /last30days activation accuracy fixture
+# social: true = topic should activate /last30days
+topics:
+  # social = true (10 topics)
+  - topic: "what do developers think of Bun vs Node.js right now"
+    social: true
+  - topic: "community reaction to OpenAI o3 release"
+    social: true
+  - topic: "sentiment around Tailwind CSS v4 in 2025"
+    social: true
+  - topic: "how are devs using Cursor vs GitHub Copilot"
+    social: true
+  - topic: "current discourse on Elon Musk's leadership at X"
+    social: true
+  - topic: "React vs Vue vs Svelte in 2025 — developer sentiment"
+    social: true
+  - topic: "what's the buzz around Supabase vs PlanetScale"
+    social: true
+  - topic: "Python packaging ecosystem drama in 2025"
+    social: true
+  - topic: "how people feel about Claude vs ChatGPT vs Gemini"
+    social: true
+  - topic: "Vercel pricing controversy — developer opinions"
+    social: true
+  # social = false (10 topics)
+  - topic: "how does transformer attention work"
+    social: false
+  - topic: "compare PostgreSQL isolation levels"
+    social: false
+  - topic: "what is the CAP theorem"
+    social: false
+  - topic: "EU AI Act compliance requirements for SaaS"
+    social: false
+  - topic: "history of UNIX operating systems"
+    social: false
+  - topic: "how does TCP/IP handshake work"
+    social: false
+  - topic: "algebraic effects in functional programming"
+    social: false
+  - topic: "Byzantine fault tolerance algorithms"
+    social: false
+  - topic: "differences between B-tree and LSM-tree indexes"
+    social: false
+  - topic: "formal verification methods for distributed systems"
+    social: false

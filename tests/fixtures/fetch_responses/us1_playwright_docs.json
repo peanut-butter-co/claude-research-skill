@@ -1,0 +1,7 @@
+{
+  "url": "https://playwright.dev/docs/intro",
+  "ok": true,
+  "status_code": 200,
+  "content": "Playwright enables reliable end-to-end testing for modern web apps. It was created by Microsoft and supports all modern rendering engines including Chromium, Firefox, and WebKit. Playwright is primarily an end-to-end (E2E) and browser automation framework, not a unit test runner — comparing its startup time with Jest or Vitest is not meaningful because each test run requires launching one or more browser instances, adding 1-3 seconds of overhead per worker. TypeScript support is first-class with no additional configuration. ESM support follows the Node.js and browser environments. Snapshot testing in Playwright refers to visual screenshot comparisons, not serialized value snapshots as in Jest/Vitest. Tests run in parallel by default across multiple browser workers. Playwright Test has approximately 5 million weekly downloads on npm. Playwright is actively maintained by Microsoft. Used widely by enterprise teams and OSS projects including Microsoft products, Vercel, and GitHub.",
+  "fetch_method": "webfetch"
+}

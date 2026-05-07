@@ -1,0 +1,14 @@
+# Runtime artifacts
+tasks/
+learnings/*.md
+!learnings/.gitkeep
+.config/research-skill/.env
+*.lock
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.pytest_cache/

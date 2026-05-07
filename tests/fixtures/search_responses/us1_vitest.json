@@ -1,0 +1,29 @@
+{
+  "query": "vitest javascript testing framework benchmark",
+  "results": [
+    {
+      "url": "https://vitest.dev/guide/",
+      "title": "Getting Started | Vitest",
+      "snippet": "Vitest is a Vite-native testing framework. It is fast by design, leveraging Vite's transformation pipeline. Startup time is typically under 200ms.",
+      "date": "2024-02-01"
+    },
+    {
+      "url": "https://npmjs.com/package/vitest",
+      "title": "vitest - npm",
+      "snippet": "Vitest has 15M+ weekly downloads and growing rapidly. Compatible with Jest API for easy migration.",
+      "date": "2024-03-01"
+    },
+    {
+      "url": "https://github.com/vitest-dev/vitest",
+      "title": "vitest-dev/vitest: Next generation testing framework - GitHub",
+      "snippet": "Vitest is a blazing fast unit test framework powered by Vite. 13k stars. Maintained by the Vue/Vite core team.",
+      "date": "2024-03-15"
+    },
+    {
+      "url": "https://dev.to/sara/vitest-startup-speed-benchmark",
+      "title": "Vitest startup is 10x faster than Jest — benchmarks",
+      "snippet": "In controlled benchmarks, Vitest cold start clocks at ~120ms versus Jest's ~800ms. Hot reload in watch mode is nearly instant.",
+      "date": "2024-01-25"
+    }
+  ]
+}

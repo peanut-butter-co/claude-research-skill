@@ -1,0 +1,35 @@
+{
+  "query": "playwright javascript testing framework benchmark",
+  "results": [
+    {
+      "url": "https://playwright.dev/docs/intro",
+      "title": "Installation | Playwright",
+      "snippet": "Playwright enables reliable end-to-end testing for modern web apps. Supports Chromium, Firefox, and WebKit. Created by Microsoft.",
+      "date": "2024-01-20"
+    },
+    {
+      "url": "https://npmjs.com/package/@playwright/test",
+      "title": "@playwright/test - npm",
+      "snippet": "Playwright Test has 5M+ weekly downloads. Used for browser automation and E2E testing. Startup involves spinning up browser instances.",
+      "date": "2024-03-01"
+    },
+    {
+      "url": "https://github.com/microsoft/playwright",
+      "title": "microsoft/playwright: Playwright is a framework for Web Testing - GitHub",
+      "snippet": "Playwright supports all modern rendering engines. Cross-language: Node.js, Python, .NET, Java. 65k GitHub stars. Maintained by Microsoft.",
+      "date": "2024-03-20"
+    },
+    {
+      "url": "https://medium.com/@qa/playwright-vs-cypress-2024",
+      "title": "Playwright vs Cypress in 2024: the definitive comparison",
+      "snippet": "Playwright is primarily an E2E testing tool, not a unit test runner. Comparing it to Jest or Vitest is comparing apples and oranges.",
+      "date": "2024-02-05"
+    },
+    {
+      "url": "https://dev.to/bob/playwright-e2e-speed",
+      "title": "How fast is Playwright for E2E tests?",
+      "snippet": "Playwright startup requires browser launch which adds 1-3 seconds overhead. Not meaningful to compare startup with unit test runners.",
+      "date": "2023-11-01"
+    }
+  ]
+}

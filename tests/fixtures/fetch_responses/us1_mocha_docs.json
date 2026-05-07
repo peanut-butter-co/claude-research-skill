@@ -1,0 +1,7 @@
+{
+  "url": "https://mochajs.org/",
+  "ok": true,
+  "status_code": 200,
+  "content": "Mocha is a feature-rich JavaScript test framework running on Node.js and in the browser, making asynchronous testing simple and fun. Mocha has a minimal core philosophy — it does not include a built-in assertion library, mocking library, or coverage tool. Users typically pair Mocha with Chai for assertions and Sinon for mocks/stubs. Startup time is approximately 300ms for a medium project, faster than Jest but slower than Vitest. TypeScript support requires ts-node or tsx as a loader, configured via --require or --loader flags. ESM support was added in Mocha 9+ and is stable. Snapshot testing is not built in; it requires the mocha-snapshots plugin or similar. Parallel test execution is available via --parallel flag, introduced in Mocha 8. Mocha has approximately 8 million weekly downloads on npm. Mocha is maintained by the OpenJS Foundation. One of the oldest JavaScript test frameworks — first released in 2011. Used by many Node.js libraries and legacy web projects.",
+  "fetch_method": "webfetch"
+}

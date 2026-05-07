@@ -1,0 +1,17 @@
+[
+  {
+    "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai",
+    "title": "EU regulatory framework for AI - European Commission",
+    "snippet": "The Commission's impact assessment estimates compliance costs for SMEs deploying limited-risk AI systems will be significantly lower than for high-risk system providers, which may face costs exceeding EUR 200,000 for third-party conformity assessments."
+  },
+  {
+    "url": "https://blog.iapp.org/eu-ai-act-sme-compliance-guide/",
+    "title": "EU AI Act SME Compliance Guide - IAPP",
+    "snippet": "Practical compliance cost estimates for SMEs range from EUR 25,000 to 50,000 for initial setup, with annual maintenance costs of EUR 5,000 to 15,000 for limited-risk systems. High-risk providers face substantially higher costs."
+  },
+  {
+    "url": "https://ec.europa.eu/digital-strategy/our-policies/eu-artificial-intelligence-act_en",
+    "title": "EU AI Act - European Commission",
+    "snippet": "The AI Act includes provisions to reduce compliance burden for SMEs, including simplified documentation requirements and access to regulatory sandboxes to support innovation."
+  }
+]

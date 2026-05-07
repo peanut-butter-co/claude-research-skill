@@ -1,0 +1,29 @@
+{
+  "query": "mocha javascript testing framework benchmark",
+  "results": [
+    {
+      "url": "https://mochajs.org/",
+      "title": "Mocha - the fun, simple, flexible JavaScript test framework",
+      "snippet": "Mocha is a feature-rich JavaScript test framework running on Node.js, making asynchronous testing simple and fun. Minimal core, extensible.",
+      "date": "2024-01-10"
+    },
+    {
+      "url": "https://npmjs.com/package/mocha",
+      "title": "mocha - npm",
+      "snippet": "Mocha has around 8M weekly downloads. One of the oldest and most established Node.js test frameworks.",
+      "date": "2024-03-01"
+    },
+    {
+      "url": "https://github.com/mochajs/mocha",
+      "title": "mochajs/mocha: simple, flexible, fun javascript test framework - GitHub",
+      "snippet": "Mocha.js test framework for Node.js. 22k GitHub stars. Requires external assertion libraries like Chai or Node assert.",
+      "date": "2024-02-28"
+    },
+    {
+      "url": "https://dev.to/carl/mocha-chai-setup-2024",
+      "title": "Setting up Mocha and Chai in 2024",
+      "snippet": "Mocha has no built-in assertion library or mocking — you need to pair it with Chai, Sinon, etc. Startup is fast (~300ms) but setup is verbose.",
+      "date": "2023-09-15"
+    }
+  ]
+}

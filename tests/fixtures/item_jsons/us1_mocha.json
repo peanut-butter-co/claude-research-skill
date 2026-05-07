@@ -1,0 +1,70 @@
+{
+  "item": "mocha",
+  "fields": {
+    "startup_time": {
+      "value": "~300ms for a medium project; faster than Jest but lacks built-in transform",
+      "sources": [
+        {"url": "https://mochajs.org/", "title": "Mocha Homepage", "tier": "A", "date": "2024-01-10", "fetch_method": "webfetch", "extraction_failed": false},
+        {"url": "https://dev.to/carl/mocha-chai-setup-2024", "title": "Setting up Mocha and Chai in 2024", "tier": "C", "date": "2023-09-15", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "watch_mode_speed": {
+      "value": "Moderate via --watch flag; no HMR — re-runs full test suite or changed files",
+      "sources": [
+        {"url": "https://mochajs.org/#-watch-w", "title": "Mocha --watch option", "tier": "A", "date": "2024-01-10", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "typescript_support": {
+      "value": "Requires ts-node or tsx as a loader configured via --require or --loader flags; not zero-config",
+      "sources": [
+        {"url": "https://mochajs.org/#nodejs-native-esm-support", "title": "Mocha ESM and TypeScript", "tier": "A", "date": "2024-01-10", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "esm_support": {
+      "value": "Yes, Node.js native ESM support stable since Mocha 9",
+      "sources": [
+        {"url": "https://mochajs.org/#nodejs-native-esm-support", "title": "Mocha Native ESM", "tier": "A", "date": "2024-01-10", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "snapshot_testing": {
+      "value": "[uncertain]",
+      "sources": [
+        {"url": "https://npmjs.com/package/chai-jest-snapshot", "title": "chai-jest-snapshot - npm", "tier": "B", "date": "2023-01-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "parallel_execution": {
+      "value": "Yes, via --parallel flag introduced in Mocha 8; not enabled by default",
+      "sources": [
+        {"url": "https://mochajs.org/#-parallel-p", "title": "Mocha --parallel option", "tier": "A", "date": "2024-01-10", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "weekly_downloads": {
+      "value": "~8M per week on npm",
+      "sources": [
+        {"url": "https://npmjs.com/package/mocha", "title": "mocha - npm", "tier": "B", "date": "2024-03-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "active_maintenance": {
+      "value": "Yes, community maintained under OpenJS Foundation; slower release cadence than Jest/Vitest",
+      "sources": [
+        {"url": "https://github.com/mochajs/mocha", "title": "mochajs/mocha GitHub", "tier": "B", "date": "2024-02-28", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "notable_users": {
+      "value": "Node.js core project, many legacy enterprise Node.js applications",
+      "sources": [
+        {"url": "https://mochajs.org/#projects-using-mocha", "title": "Projects Using Mocha", "tier": "A", "date": "2024-01-10", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    }
+  },
+  "uncertain": ["snapshot_testing"],
+  "pruned": false,
+  "emergent_threads_chased": [],
+  "proposed_extensions": [],
+  "budget_consumed": 9,
+  "budget_exhausted": false,
+  "_meta": {
+    "agent_run": "2026-05-07T10:15:00",
+    "hints_received": []
+  }
+}

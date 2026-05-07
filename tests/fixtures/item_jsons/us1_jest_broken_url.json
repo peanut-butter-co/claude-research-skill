@@ -1,0 +1,70 @@
+{
+  "item": "jest",
+  "fields": {
+    "startup_time": {
+      "value": "~800ms for medium projects; slower with Babel transform; using SWC or ts-jest reduces to ~300ms",
+      "sources": [
+        {"url": "https://broken.example.com/jest-perf", "title": "Jest Performance Benchmarks", "tier": "B", "date": "2024-01-15", "fetch_method": "webfetch", "extraction_failed": false},
+        {"url": "https://jestjs.io/docs/getting-started", "title": "Jest Getting Started", "tier": "A", "date": "2024-01-15", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "watch_mode_speed": {
+      "value": "Moderate; uses watchman for file watching; re-runs only changed test files",
+      "sources": [
+        {"url": "https://jestjs.io/docs/watch-mode", "title": "Jest Watch Mode", "tier": "A", "date": "2024-01-15", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "typescript_support": {
+      "value": "Yes, via babel-jest or ts-jest; native support improved in Jest 29+",
+      "sources": [
+        {"url": "https://jestjs.io/docs/getting-started#using-typescript", "title": "Jest TypeScript Guide", "tier": "A", "date": "2024-01-15", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "esm_support": {
+      "value": "Experimental; requires --experimental-vm-modules flag and additional configuration",
+      "sources": [
+        {"url": "https://jestjs.io/docs/ecmascript-modules", "title": "Jest ECMAScript Modules", "tier": "A", "date": "2024-01-15", "fetch_method": "jina", "extraction_failed": false}
+      ]
+    },
+    "snapshot_testing": {
+      "value": "Yes, built-in; pioneered snapshot testing in the JS ecosystem",
+      "sources": [
+        {"url": "https://jestjs.io/docs/snapshot-testing", "title": "Jest Snapshot Testing", "tier": "A", "date": "2024-01-15", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "parallel_execution": {
+      "value": "Yes, runs tests in parallel via worker processes by default; configurable with --workers flag",
+      "sources": [
+        {"url": "https://jestjs.io/docs/configuration#workers-number--string", "title": "Jest Workers Config", "tier": "A", "date": "2024-01-15", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "weekly_downloads": {
+      "value": "50M+ per week on npm",
+      "sources": [
+        {"url": "https://npmjs.com/package/jest", "title": "jest - npm", "tier": "B", "date": "2024-03-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "active_maintenance": {
+      "value": "Yes, maintained by Meta open source team; regular releases within past 3 months",
+      "sources": [
+        {"url": "https://github.com/jestjs/jest", "title": "jestjs/jest GitHub", "tier": "B", "date": "2024-03-01", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    },
+    "notable_users": {
+      "value": "Meta, Airbnb, Twitter, Spotify",
+      "sources": [
+        {"url": "https://jestjs.io/#who-uses-jest", "title": "Who Uses Jest", "tier": "A", "date": "2024-01-15", "fetch_method": "webfetch", "extraction_failed": false}
+      ]
+    }
+  },
+  "uncertain": [],
+  "pruned": false,
+  "emergent_threads_chased": [],
+  "proposed_extensions": [],
+  "budget_consumed": 9,
+  "budget_exhausted": false,
+  "_meta": {
+    "agent_run": "2026-05-07T10:00:00",
+    "hints_received": []
+  }
+}

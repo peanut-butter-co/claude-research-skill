@@ -1,0 +1,19 @@
+# /last30days results for: vitest javascript testing framework
+
+## Reddit (r/javascript, r/vuejs, r/webdev)
+- "Switched from Jest to Vitest, 10x faster startup" (r/javascript, 2024-02-15, 847 upvotes)
+  https://reddit.com/r/javascript/comments/abc123/switched_from_jest_to_vitest
+- "Vitest 1.0 is stable — migration guide from Jest" (r/vuejs, 2024-01-08, 634 upvotes)
+  https://reddit.com/r/vuejs/comments/jkl012/vitest_1_stable_migration
+- "Vitest watch mode is insanely fast" (r/webdev, 2024-02-20, 298 upvotes)
+  https://reddit.com/r/webdev/comments/mno345/vitest_watch_mode_fast
+
+## Hacker News
+- "Show HN: Jest vs Vitest benchmark" (HN, 2024-01-20, 312 points)
+  https://news.ycombinator.com/item?id=12345678
+- "Vitest: a Vite-native test framework" (HN, 2024-01-15, 445 points)
+  https://news.ycombinator.com/item?id=34567890
+
+## X (Twitter)
+- "@antfu7: Vitest 1.3 released — 15% faster cold start, improved coverage UI" (2024-02-28, 1.2k likes)
+  https://x.com/antfu7/status/pqr678

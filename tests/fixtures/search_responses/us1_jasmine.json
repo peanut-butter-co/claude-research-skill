@@ -1,0 +1,29 @@
+{
+  "query": "jasmine javascript testing framework benchmark",
+  "results": [
+    {
+      "url": "https://jasmine.github.io/pages/getting_started.html",
+      "title": "Getting Started - Jasmine Documentation",
+      "snippet": "Jasmine is a Behavior Driven Development (BDD) testing framework for JavaScript. No external dependencies required. Built-in matchers and spies.",
+      "date": "2024-01-05"
+    },
+    {
+      "url": "https://npmjs.com/package/jasmine",
+      "title": "jasmine - npm",
+      "snippet": "Jasmine has around 2.5M weekly downloads. Declining from peak popularity; many teams migrated to Jest. Still used in Angular projects.",
+      "date": "2024-03-01"
+    },
+    {
+      "url": "https://github.com/jasmine/jasmine",
+      "title": "jasmine/jasmine: Simple JavaScript testing framework - GitHub",
+      "snippet": "Jasmine: DOM-less simple JavaScript testing framework. 15k GitHub stars. Slower release cadence in recent years.",
+      "date": "2024-02-10"
+    },
+    {
+      "url": "https://medium.com/@dev/jasmine-vs-jest-2024",
+      "title": "Is Jasmine still worth using in 2024?",
+      "snippet": "Jasmine was groundbreaking in the BDD testing space but has largely been replaced by Jest and Vitest for new projects. Angular CLI still defaults to Jasmine.",
+      "date": "2023-12-01"
+    }
+  ]
+}

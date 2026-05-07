@@ -1,0 +1,19 @@
+mode: comparative
+topic: "best cheese shops in Madrid"
+items:
+  - Quesería Cultivo
+  - La Boulette
+  - El Colmado del León
+  - Cheese Bar Madrid
+  - Remi
+fields_file: fields.yaml
+config:
+  items_per_batch: 1
+  social_signal: true
+  rigor: standard
+  query_budget: 15
+  max_emergent_threads: 2
+  extension_budget: 5
+  include_tier_d: false
+  topic_integrations:
+    - google_places

@@ -1,0 +1,183 @@
+# publisher-graph.yaml
+# Schema: domain → parent_publisher (root identifier)
+# Domains without an entry default to their own root domain as parent.
+# Purpose: cross-citation independence check (FR-015)
+# Two domains sharing a parent publisher do NOT count as independent sources.
+---
+parents:
+
+  # ─── Springer Nature group ─────────────────────────────────────────────────
+  nature.com: "springer-nature"
+  scientificamerican.com: "springer-nature"
+  springer.com: "springer-nature"
+  springerlink.com: "springer-nature"
+  biomedcentral.com: "springer-nature"
+  # BioMed Central sub-journals (illustrative; all resolve to same parent)
+  bmcbioinformatics.biomedcentral.com: "springer-nature"
+  bmcmedicine.biomedcentral.com: "springer-nature"
+
+  # ─── Elsevier group ────────────────────────────────────────────────────────
+  elsevier.com: "elsevier"
+  sciencedirect.com: "elsevier"
+  cell.com: "elsevier"
+  thelancet.com: "elsevier"
+  # Additional Elsevier journals / portals
+  clinicalkey.com: "elsevier"
+  mendeley.com: "elsevier"
+
+  # ─── Wiley group ───────────────────────────────────────────────────────────
+  wiley.com: "wiley"
+  onlinelibrary.wiley.com: "wiley"
+  # Wiley-Blackwell sub-brands
+  agupubs.onlinelibrary.wiley.com: "wiley"
+
+  # ─── Taylor & Francis / Informa group ─────────────────────────────────────
+  taylorandfrancis.com: "informa-taylor-francis"
+  tandfonline.com: "informa-taylor-francis"
+  routledge.com: "informa-taylor-francis"
+
+  # ─── SAGE Publishing ───────────────────────────────────────────────────────
+  sagepub.com: "sage"
+  journals.sagepub.com: "sage"
+
+  # ─── Oxford University Press ───────────────────────────────────────────────
+  oup.com: "oxford-university-press"
+  academic.oup.com: "oxford-university-press"
+  oxfordjournals.org: "oxford-university-press"
+
+  # ─── Cambridge University Press ────────────────────────────────────────────
+  cambridge.org: "cambridge-university-press"
+  journals.cambridge.org: "cambridge-university-press"
+
+  # ─── American Chemical Society ─────────────────────────────────────────────
+  acs.org: "acs"
+  pubs.acs.org: "acs"
+
+  # ─── IEEE ──────────────────────────────────────────────────────────────────
+  ieee.org: "ieee"
+  ieeexplore.ieee.org: "ieee"
+  spectrum.ieee.org: "ieee"
+
+  # ─── ACM ───────────────────────────────────────────────────────────────────
+  acm.org: "acm"
+  dl.acm.org: "acm"
+  cacm.acm.org: "acm"
+
+  # ─── BMJ Publishing Group ──────────────────────────────────────────────────
+  bmj.com: "bmj-publishing"
+  bmjopen.bmj.com: "bmj-publishing"
+  heart.bmj.com: "bmj-publishing"
+
+  # ─── AAAS (Science) ────────────────────────────────────────────────────────
+  science.org: "aaas"
+  sciencemag.org: "aaas"
+
+  # ─── MIT (independent entities but same institutional umbrella) ────────────
+  mitpress.mit.edu: "mit"
+  technologyreview.com: "mit"   # MIT Technology Review is MIT-owned
+
+  # ─── Bloomberg / Bloomberg LP ──────────────────────────────────────────────
+  bloomberg.com: "bloomberg-lp"
+  bloomberg.net: "bloomberg-lp"
+  businessweek.com: "bloomberg-lp"
+  bloomberglaw.com: "bloomberg-lp"
+  bloombergtax.com: "bloomberg-lp"
+
+  # ─── Reuters / Thomson Reuters ─────────────────────────────────────────────
+  reuters.com: "thomson-reuters"
+  thomsonreuters.com: "thomson-reuters"
+
+  # ─── Associated Press ──────────────────────────────────────────────────────
+  apnews.com: "associated-press"
+  ap.org: "associated-press"
+
+  # ─── New York Times Company ────────────────────────────────────────────────
+  nytimes.com: "nyt-company"
+  thewirecutter.com: "nyt-company"
+  cooking.nytimes.com: "nyt-company"
+
+  # ─── Washington Post / Nash Holdings ──────────────────────────────────────
+  washingtonpost.com: "nash-holdings-wapo"
+
+  # ─── Dow Jones (News Corp) ─────────────────────────────────────────────────
+  wsj.com: "dow-jones-news-corp"
+  marketwatch.com: "dow-jones-news-corp"
+  barrons.com: "dow-jones-news-corp"
+  fnlondon.com: "dow-jones-news-corp"
+
+  # ─── News Corp (broader) ───────────────────────────────────────────────────
+  # WSJ/Dow Jones already above; HarperCollins is separate print entity
+  nypost.com: "news-corp"
+  foxnews.com: "fox-corp"   # Fox Corp split from News Corp in 2013
+
+  # ─── Financial Times / Nikkei ─────────────────────────────────────────────
+  ft.com: "nikkei-ft"
+
+  # ─── Guardian Media Group ─────────────────────────────────────────────────
+  theguardian.com: "guardian-media-group"
+  observer.com: "guardian-media-group"   # The Observer (UK Sunday paper, GMG)
+
+  # ─── BBC ──────────────────────────────────────────────────────────────────
+  bbc.com: "bbc"
+  bbc.co.uk: "bbc"
+  bbcnews.com: "bbc"
+
+  # ─── Condé Nast ───────────────────────────────────────────────────────────
+  wired.com: "conde-nast"
+  arstechnica.com: "conde-nast"
+  newyorker.com: "conde-nast"
+  vanityfair.com: "conde-nast"
+  vogue.com: "conde-nast"
+
+  # ─── The Economist Group ──────────────────────────────────────────────────
+  economist.com: "economist-group"
+
+  # ─── CNN / Warner Bros. Discovery ─────────────────────────────────────────
+  cnn.com: "warner-bros-discovery"
+  cnnespanol.cnn.com: "warner-bros-discovery"
+  cnnbusiness.com: "warner-bros-discovery"
+
+  # ─── Yahoo / Apollo (TechCrunch) ──────────────────────────────────────────
+  techcrunch.com: "yahoo-apollo"
+  yahoo.com: "yahoo-apollo"
+  engadget.com: "yahoo-apollo"
+
+  # ─── Axel Springer ────────────────────────────────────────────────────────
+  politico.com: "axel-springer"
+  businessinsider.com: "axel-springer"
+  insider.com: "axel-springer"
+
+  # ─── Spiegel Group ────────────────────────────────────────────────────────
+  spiegel.de: "spiegel-gruppe"
+  manager-magazin.de: "spiegel-gruppe"
+
+  # ─── Le Monde Group ───────────────────────────────────────────────────────
+  lemonde.fr: "le-monde-groupe"
+  telerama.fr: "le-monde-groupe"
+
+  # ─── Atlantic Media / Emerson Collective ──────────────────────────────────
+  theatlantic.com: "emerson-collective-atlantic"
+
+  # ─── The Atlantic Council (independent think-tank, not related to The Atlantic) ─
+  # atlanticcouncil.org is independent — no parent entry needed
+
+  # ─── Foreign Affairs / CFR ────────────────────────────────────────────────
+  foreignaffairs.com: "cfr"
+  cfr.org: "cfr"
+
+  # ─── Society for Science (Science News) ───────────────────────────────────
+  sciencenews.org: "society-for-science"
+
+  # ─── Leaf Group (content farms) ───────────────────────────────────────────
+  ehow.com: "leaf-group"
+  livestrong.com: "leaf-group"
+  hunker.com: "leaf-group"
+  sapling.com: "leaf-group"
+
+  # ─── IAC / Dotdash Meredith (aggregators) ─────────────────────────────────
+  answers.com: "iac-dotdash"
+  reference.com: "iac-dotdash"
+  about.com: "iac-dotdash"
+  verywell.com: "iac-dotdash"
+  thebalance.com: "iac-dotdash"
+  investopedia.com: "iac-dotdash"

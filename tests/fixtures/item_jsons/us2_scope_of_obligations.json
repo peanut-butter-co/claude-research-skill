@@ -1,0 +1,55 @@
+{
+  "subquery": "What obligations does the EU AI Act impose on small SaaS vendors?",
+  "fields": {
+    "summary": {
+      "value": "The EU AI Act classifies AI systems by risk level. Small SaaS vendors providing general-purpose AI tools are generally subject to transparency obligations under Article 52. High-risk AI system providers (e.g. HR, credit scoring, biometrics) face heavier obligations including conformity assessments and technical documentation under Articles 9-17.",
+      "sources": [
+        {
+          "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689",
+          "title": "Regulation (EU) 2024/1689 — EUR-Lex",
+          "tier": "A",
+          "date": "2024-06-13",
+          "fetch_method": "webfetch",
+          "extraction_failed": false
+        },
+        {
+          "url": "https://ec.europa.eu/digital-strategy/our-policies/eu-artificial-intelligence-act_en",
+          "title": "EU AI Act - European Commission",
+          "tier": "B",
+          "date": "2024-08-01",
+          "fetch_method": "webfetch",
+          "extraction_failed": false
+        }
+      ]
+    },
+    "risk_classification": {
+      "value": "The Act defines four risk tiers: unacceptable risk (prohibited), high-risk (Articles 9-17 obligations), limited risk (Article 52 transparency), and minimal risk (no obligations). Most general-purpose SaaS tools fall in limited or minimal risk categories.",
+      "sources": [
+        {
+          "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689",
+          "title": "Regulation (EU) 2024/1689 — EUR-Lex",
+          "tier": "A",
+          "date": "2024-06-13",
+          "fetch_method": "webfetch",
+          "extraction_failed": false
+        }
+      ]
+    }
+  },
+  "uncertain": [],
+  "pruned": false,
+  "emergent_threads_chased": [],
+  "proposed_extensions": [
+    {
+      "type": "subquery",
+      "description": "SME exemptions or sandboxes under the EU AI Act",
+      "rationale": "Multiple sources mention regulatory sandboxes as a relief mechanism for SMEs"
+    }
+  ],
+  "budget_consumed": 8,
+  "budget_exhausted": false,
+  "_meta": {
+    "agent_run": "2026-05-07T10:00:00",
+    "hints_received": []
+  }
+}

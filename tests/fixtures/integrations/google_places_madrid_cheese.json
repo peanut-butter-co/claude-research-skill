@@ -1,0 +1,50 @@
+{
+  "results": [
+    {
+      "name": "Quesería Cultivo",
+      "formatted_address": "Calle del General Lacy, 10, 28045 Madrid, Spain",
+      "place_id": "ChIJcultivo1234Madrid",
+      "rating": 4.8,
+      "user_ratings_total": 312,
+      "business_status": "OPERATIONAL",
+      "geometry": {"location": {"lat": 40.4088, "lng": -3.6912}}
+    },
+    {
+      "name": "La Boulette",
+      "formatted_address": "Calle de Argumosa, 25, 28012 Madrid, Spain",
+      "place_id": "ChIJboulette5678Madrid",
+      "rating": 4.7,
+      "user_ratings_total": 187,
+      "business_status": "OPERATIONAL",
+      "geometry": {"location": {"lat": 40.4087, "lng": -3.7003}}
+    },
+    {
+      "name": "El Colmado del León",
+      "formatted_address": "Calle del León, 32, 28014 Madrid, Spain",
+      "place_id": "ChIJcolmado9012Madrid",
+      "rating": 4.6,
+      "user_ratings_total": 245,
+      "business_status": "OPERATIONAL",
+      "geometry": {"location": {"lat": 40.4133, "lng": -3.6957}}
+    },
+    {
+      "name": "Cheese Bar Madrid",
+      "formatted_address": "Calle de Ponzano, 14, 28010 Madrid, Spain",
+      "place_id": "ChIJcheesebar3456Madrid",
+      "rating": 4.5,
+      "user_ratings_total": 423,
+      "business_status": "OPERATIONAL",
+      "geometry": {"location": {"lat": 40.4348, "lng": -3.6961}}
+    },
+    {
+      "name": "Remi",
+      "formatted_address": "Calle de Piamonte, 2, 28004 Madrid, Spain",
+      "place_id": "ChIJremi7890Madrid",
+      "rating": 4.9,
+      "user_ratings_total": 156,
+      "business_status": "OPERATIONAL",
+      "geometry": {"location": {"lat": 40.4239, "lng": -3.6943}}
+    }
+  ],
+  "status": "OK"
+}

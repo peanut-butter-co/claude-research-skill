@@ -1,0 +1,14 @@
+mode: narrative
+topic: "what impact does the EU AI Act have on SaaS startups under 50 employees"
+subqueries:
+  - "What obligations does the EU AI Act impose on small SaaS vendors?"
+  - "What are the estimated compliance costs for startups under 50 employees?"
+  - "Are there SME exemptions or reduced obligations in the EU AI Act?"
+config:
+  social_signal: false
+  rigor: standard
+  query_budget: 15
+  max_emergent_threads: 2
+  extension_budget: 5
+  include_tier_d: false
+  topic_integrations: []

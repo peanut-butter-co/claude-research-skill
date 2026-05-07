@@ -1,0 +1,109 @@
+# fallback-extractors.yaml
+# FR-028: Content extraction and search fallback chain configuration
+#
+# Chain semantics:
+#   tier1 (text extraction): tried in listed order for every URL that the primary
+#     extractor (direct HTTP fetch) fails on. These are lightweight, API-based, and
+#     do not require a running browser. All three must be exhausted before tier2 is
+#     attempted.
+#
+#   tier2 (browser control): last resort only. Used when a page requires JavaScript
+#     rendering, login-wall bypass via stored session cookies, or signed/dynamic
+#     content that tier1 cannot retrieve. Entries are probed in priority order; the
+#     first available controller wins. Availability is detected at runtime via the
+#     "detect" field (env var check or MCP server name check).
+#
+#   websearch_fallbacks: used when the primary search provider (WebSearch tool) is
+#     unavailable or returns no results. Tried in listed order.
+#
+# requires_env: name of the environment variable that must be set; null means free/no-auth.
+# detect:       "env:<VAR>" checks os.environ; "mcp:<server>" checks active MCP servers.
+---
+
+tier1:
+  - name: jina
+    module: scripts.extractors.jina
+    requires_env: null
+    fetch_url_template: "https://r.jina.ai/{url}"
+    timeout_seconds: 15
+    description: >
+      Jina AI Reader — free text extraction via public proxy, no authentication
+      required. Strips ads and boilerplate; returns clean markdown. Best first
+      choice for public web pages.
+
+  - name: exa_contents
+    module: scripts.extractors.exa
+    requires_env: "EXA_API_KEY"
+    endpoint: "https://api.exa.ai/contents"
+    timeout_seconds: 20
+    description: >
+      Exa.ai /contents endpoint — neural search index with full-text extraction.
+      Returns cleaned HTML or markdown. Useful for pages that Jina cannot reach
+      (rate-limited, bot-blocked). Requires EXA_API_KEY.
+
+  - name: wayback
+    module: scripts.extractors.wayback
+    requires_env: null
+    availability_url_template: "https://archive.org/wayback/available?url={url}"
+    fetch_url_template: "https://web.archive.org/web/{timestamp}/{url}"
+    timeout_seconds: 25
+    description: >
+      Wayback Machine (archive.org) most-recent snapshot. Free, no auth. Falls back
+      to the newest archived version of the URL. Useful for paywalled or deleted
+      pages where a recent snapshot exists. May return stale content.
+
+tier2:
+  - name: browser_ext
+    kind: ext
+    priority: 1
+    detect: "env:CLAUDE_CHROME_EXT_AVAILABLE"
+    description: >
+      Claude Chrome Extension — if the extension is running and has an active
+      authenticated session, it can fetch JS-rendered and login-gated pages using
+      the user's own browser cookies. Highest fidelity for authenticated content.
+
+  - name: chrome_mcp
+    kind: mcp
+    priority: 2
+    detect: "mcp:chrome-devtools"
+    description: >
+      chrome-devtools MCP server — drives a local Chrome instance via CDP.
+      Handles SPA rendering, cookie-authenticated sessions, and dynamic lazy-loaded
+      content. Requires the chrome-devtools MCP server to be active.
+
+  - name: playwright_mcp
+    kind: mcp
+    priority: 3
+    detect: "mcp:playwright"
+    description: >
+      Playwright MCP server — headless browser automation via Microsoft Playwright.
+      Most portable tier2 option; works without a user-facing Chrome profile.
+      Slower than chrome_mcp for auth scenarios. Requires the playwright MCP server
+      to be active.
+
+websearch_fallbacks:
+  - name: brave
+    module: scripts.search.brave
+    requires_env: "BRAVE_API_KEY"
+    endpoint: "https://api.search.brave.com/res/v1/web/search"
+    description: >
+      Brave Search API — independent index, no Google/Bing dependency. Fast and
+      privacy-respecting. Primary alternative when the built-in WebSearch tool is
+      unavailable. Requires BRAVE_API_KEY.
+
+  - name: exa_search
+    module: scripts.search.exa
+    requires_env: "EXA_API_KEY"
+    endpoint: "https://api.exa.ai/search"
+    description: >
+      Exa.ai search endpoint — neural/semantic search optimized for research
+      queries. Complements Brave's keyword-based results with embedding-based
+      retrieval. Requires EXA_API_KEY (shared with exa_contents extractor).
+
+  - name: duckduckgo
+    module: scripts.search.duckduckgo
+    requires_env: null
+    description: >
+      DuckDuckGo HTML scraping — last resort, no API key needed. Parses the
+      DDG HTML results page. Fragile against layout changes and rate-limited
+      under heavy use. Use only when all keyed providers are unavailable.
