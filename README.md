@@ -43,6 +43,6 @@ claude
 
 ## Docs
 
-- [`SPECS.md`](./SPECS.md) — full functional and non-functional requirements
-- [`PLAN.md`](./PLAN.md) — implementation plan, project structure, architectural decisions
-- [`TASKS.md`](./TASKS.md) — task breakdown and status
+- [`SPECS.md`](./docs/SPECS.md) — full functional and non-functional requirements
+- [`PLAN.md`](./docs/PLAN.md) — implementation plan, project structure, architectural decisions
+- [`TASKS.md`](./docs/TASKS.md) — task breakdown and status

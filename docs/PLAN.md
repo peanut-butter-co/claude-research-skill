@@ -115,7 +115,7 @@ research-skill/
 │   │   ├── fetch_responses/
 │   │   └── outlines/
 │   └── smoke/                             # manual live-network tests
-├── patrones/                              # already-written process docs (read-only by skill at runtime)
+├── docs/patrones/                         # already-written process docs (read-only by skill at runtime)
 │   ├── pre-research-planning.md
 │   └── spec-kit-prompts/
 ├── learnings/                             # runtime-populated, gitignored content but path tracked
