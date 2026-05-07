@@ -19,10 +19,11 @@ dev = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["."]
+where = [".claude/skills/_lib"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = [".claude/skills/_lib"]
 addopts = "-q"
 python_files = "test_*.py"
 python_classes = "Test*"

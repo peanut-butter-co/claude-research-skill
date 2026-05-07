@@ -10,7 +10,7 @@ tools:
 
 # /research-consolidate
 
-You are the self-learning consolidation stage of `research-skill`. The pipeline writes pending entries to `learnings/` whenever the user gives feedback, corrects a recommendation, or closes a session with something worth remembering. Over time those pending entries accumulate; your job is to read them, group them by type, propose targeted promotions to the project's knowledge files (`data/*.yaml`, `CLAUDE.md`, individual `SKILL.md`), and update each entry's `status` on user approval.
+You are the self-learning consolidation stage of `research-skill`. The pipeline writes pending entries to `learnings/` whenever the user gives feedback, corrects a recommendation, or closes a session with something worth remembering. Over time those pending entries accumulate; your job is to read them, group them by type, propose targeted promotions to the project's knowledge files (`.claude/skills/_lib/data/*.yaml`, `CLAUDE.md`, individual `SKILL.md`), and update each entry's `status` on user approval.
 
 This skill is invoked in three ways (FR-025): (a) explicitly by the user with `/research-consolidate`; (b) auto-prompted when ≥10 pending entries exist; (c) auto-prompted when one or more pending entries is older than 7 days. The auto-prompt logic lives in the upstream skills (`/research`, etc.) — by the time this skill runs the user has already agreed to consolidate, so **do not gate the skill on a count threshold**. Always read, group, and walk the user through whatever is pending.
 
@@ -25,7 +25,7 @@ All user-facing text MUST be in English.
 All Python helpers live in `scripts/` at the repo root. Invoke them with the project venv:
 
 ```bash
-.venv/bin/python -c "import sys; sys.path.insert(0, '.'); from scripts.<module> import <fn>; ..."
+.venv/bin/python -c "import sys; sys.path.insert(0, '.claude/skills/_lib'); from scripts.<module> import <fn>; ..."
 ```
 
 For multi-line snippets, prefer a heredoc:
@@ -33,7 +33,7 @@ For multi-line snippets, prefer a heredoc:
 ```bash
 .venv/bin/python <<'PY'
 import sys
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from scripts.learnings_index import read_all, filter_pending, group_by_type
 # ...
 PY
@@ -70,7 +70,7 @@ Read everything in `learnings/`, filter to pending, and group by type:
 .venv/bin/python <<'PY'
 import sys, json
 from pathlib import Path
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from scripts.learnings_index import read_all, filter_pending, group_by_type
 
 learnings_dir = Path('learnings')
@@ -176,15 +176,15 @@ Use this map (primary first, secondary as a fallback if the body explicitly sugg
 
 | Learning type | Primary target | Secondary target |
 |---|---|---|
-| `source-classification` | `data/source-tiers.yaml` — add `<domain>: {tier: X, notes: "..."}` | `data/publisher-graph.yaml` if a parent relationship is mentioned |
-| `scoring-rule` | `data/source-tiers.yaml` (if domain-specific) or comment in `data/publisher-graph.yaml` | `CLAUDE.md` §Principles if general |
-| `query-strategy` | `data/mode-detection.yaml` — add a keyword regex or update threshold | `CLAUDE.md` §Principles if general |
-| `tool-behavior` | `data/fallback-extractors.yaml` — add/update extractor entry | Relevant `SKILL.md` if it's a runtime behavior change |
-| `domain-fact` | `data/source-tiers.yaml` (domain trust update) or `data/publisher-graph.yaml` | None |
+| `source-classification` | `.claude/skills/_lib/data/source-tiers.yaml` — add `<domain>: {tier: X, notes: "..."}` | `.claude/skills/_lib/data/publisher-graph.yaml` if a parent relationship is mentioned |
+| `scoring-rule` | `.claude/skills/_lib/data/source-tiers.yaml` (if domain-specific) or comment in `.claude/skills/_lib/data/publisher-graph.yaml` | `CLAUDE.md` §Principles if general |
+| `query-strategy` | `.claude/skills/_lib/data/mode-detection.yaml` — add a keyword regex or update threshold | `CLAUDE.md` §Principles if general |
+| `tool-behavior` | `.claude/skills/_lib/data/fallback-extractors.yaml` — add/update extractor entry | Relevant `SKILL.md` if it's a runtime behavior change |
+| `domain-fact` | `.claude/skills/_lib/data/source-tiers.yaml` (domain trust update) or `.claude/skills/_lib/data/publisher-graph.yaml` | None |
 | `process-improvement` | `CLAUDE.md` §Principles | Relevant `SKILL.md` |
-| `pattern-validation` | If validated (≥2 observations): convert to a keyword/threshold tweak in `data/mode-detection.yaml`. Otherwise: an observation-comment in the same file. | `CLAUDE.md` §Principles |
+| `pattern-validation` | If validated (≥2 observations): convert to a keyword/threshold tweak in `.claude/skills/_lib/data/mode-detection.yaml`. Otherwise: an observation-comment in the same file. | `CLAUDE.md` §Principles |
 
-For legacy types: `tier`/`source` → `source-classification`; `workflow` → `process-improvement`; `integration` → `tool-behavior` (target `data/topic-integrations.yaml` instead, see §Data file edit guidance below).
+For legacy types: `tier`/`source` → `source-classification`; `workflow` → `process-improvement`; `integration` → `tool-behavior` (target `.claude/skills/_lib/data/topic-integrations.yaml` instead, see §Data file edit guidance below).
 
 ### 3.3 Generate a preview
 
@@ -224,11 +224,11 @@ Use the `Read` tool. Capture the current contents.
 
 ### 4.2 Determine the insertion point
 
-- **`data/source-tiers.yaml`** — find the appropriate tier sub-section (the file is grouped by tier with comment headers like `# ─── Tier A: ... ───`). Insert the new domain block alphabetically within the matching tier section. If the entry's suggested rule doesn't include a tier, default to `C` and note it in the entry's `notes` field.
-- **`data/publisher-graph.yaml`** — append under the matching parent group comment, or add a new group with a `# ─── <Group name> ───` header.
-- **`data/mode-detection.yaml`** — append the regex to the right `keywords.<comparative|narrative>` list, or update `threshold` if the body justifies it. For `pattern-validation` not yet validated: add a `# observation:` comment line above the relevant keyword block; do not add new keywords until validated.
-- **`data/fallback-extractors.yaml`** — append/update the matching `tier1`, `tier2`, or `websearch_fallbacks` entry.
-- **`data/topic-integrations.yaml`** — append/update under `integrations:` keyed by integration id.
+- **`.claude/skills/_lib/data/source-tiers.yaml`** — find the appropriate tier sub-section (the file is grouped by tier with comment headers like `# ─── Tier A: ... ───`). Insert the new domain block alphabetically within the matching tier section. If the entry's suggested rule doesn't include a tier, default to `C` and note it in the entry's `notes` field.
+- **`.claude/skills/_lib/data/publisher-graph.yaml`** — append under the matching parent group comment, or add a new group with a `# ─── <Group name> ───` header.
+- **`.claude/skills/_lib/data/mode-detection.yaml`** — append the regex to the right `keywords.<comparative|narrative>` list, or update `threshold` if the body justifies it. For `pattern-validation` not yet validated: add a `# observation:` comment line above the relevant keyword block; do not add new keywords until validated.
+- **`.claude/skills/_lib/data/fallback-extractors.yaml`** — append/update the matching `tier1`, `tier2`, or `websearch_fallbacks` entry.
+- **`.claude/skills/_lib/data/topic-integrations.yaml`** — append/update under `integrations:` keyed by integration id.
 - **`CLAUDE.md`** — find a section heading `## Principles` (or equivalent — `## Self-discipline`, `## Style and self-discipline`). If none exists, create one at the end of the file. Append a single bullet capturing the suggested rule.
 - **`SKILL.md`** — locate the `## Invariants` (or `## Style and self-discipline`) section in the relevant skill file and append a single bullet. Never restructure or rewrite existing bullets.
 
@@ -242,7 +242,7 @@ Use the `Write` tool with the full updated file contents. Preserve trailing newl
 ENTRY_PATH='<entry_path>' .venv/bin/python <<'PY'
 import sys, os
 from pathlib import Path
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from scripts.learnings_write import update_status
 update_status(Path(os.environ['ENTRY_PATH']), 'consolidated')
 print('STATUS_UPDATED')
@@ -261,7 +261,7 @@ For `discarded`:
 ENTRY_PATH='<entry_path>' .venv/bin/python <<'PY'
 import sys, os
 from pathlib import Path
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from scripts.learnings_write import update_status
 update_status(Path(os.environ['ENTRY_PATH']), 'discarded')
 print('STATUS_UPDATED')
@@ -300,7 +300,7 @@ End the skill. Do not run any further tools.
 
 ## Data file edit guidance (how to write promotions)
 
-### `data/source-tiers.yaml`
+### `.claude/skills/_lib/data/source-tiers.yaml`
 
 Add under the appropriate tier section:
 
@@ -312,7 +312,7 @@ Add under the appropriate tier section:
 
 Strip the leading `https://` and `www.` from any URL the learning quotes; the key is a bare domain (e.g. `example.com`, `news.example.com`).
 
-### `data/publisher-graph.yaml`
+### `.claude/skills/_lib/data/publisher-graph.yaml`
 
 Add under `parents:`:
 
@@ -322,7 +322,7 @@ Add under `parents:`:
 
 If the learning identifies a new publisher group, add a comment header (`# ─── <Group name> ───`) above the new entries, matching the style of the existing file.
 
-### `data/mode-detection.yaml`
+### `.claude/skills/_lib/data/mode-detection.yaml`
 
 Append a regex to `keywords.comparative:` or `keywords.narrative:`:
 
@@ -336,11 +336,11 @@ Or, if the body justifies it, change `threshold:` to a new value with a brief in
 threshold: 0.80  # raised after <id>: low-confidence misclassifications observed
 ```
 
-### `data/fallback-extractors.yaml`
+### `.claude/skills/_lib/data/fallback-extractors.yaml`
 
 Append a new entry under `tier1:`, `tier2:`, or `websearch_fallbacks:` matching the existing schema (`name`, `module`, `requires_env`, `endpoint`/`fetch_url_template`, `timeout_seconds`, `description`).
 
-### `data/topic-integrations.yaml`
+### `.claude/skills/_lib/data/topic-integrations.yaml`
 
 Add under `integrations:` keyed by id, matching the schema (`triggers`, `description`, `setup_url`, `adapter_module`).
 

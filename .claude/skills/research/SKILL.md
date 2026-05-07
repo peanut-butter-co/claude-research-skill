@@ -22,18 +22,18 @@ All user-facing text, file content, and error messages MUST be in English.
 
 **Input:** the topic string the user passed to `/research`. Strip surrounding quotes if present.
 
-**Repository root:** assume the current working directory is the repo root (where `scripts/`, `data/`, `tasks/`, `learnings/`, and `.config/research-skill/` live). All paths in this skill are relative to that root unless stated otherwise.
+**Repository root:** assume the current working directory is the project root. Runtime output directories (`tasks/`, `learnings/`, `.config/research-skill/`) are at the project root. Skill infrastructure (`scripts/`, `data/`) lives at `.claude/skills/_lib/` — all Python invocations use `sys.path.insert(0, '.claude/skills/_lib')`. All paths in this skill are relative to the project root unless stated otherwise.
 
 **Python invocation pattern:** all helpers are called via the project venv. Use this exact form:
 
 ```
-.venv/bin/python -c "import sys; sys.path.insert(0, '.'); <code>"
+.venv/bin/python -c "import sys; sys.path.insert(0, '.claude/skills/_lib'); <code>"
 ```
 
 When passing the topic into Python, always read it from an environment variable to avoid quoting/escaping nightmares:
 
 ```
-TOPIC='<topic>' .venv/bin/python -c "import sys, os; sys.path.insert(0, '.'); from scripts.X import Y; print(Y(os.environ['TOPIC']))"
+TOPIC='<topic>' .venv/bin/python -c "import sys, os; sys.path.insert(0, '.claude/skills/_lib'); from scripts.X import Y; print(Y(os.environ['TOPIC']))"
 ```
 
 For multi-line snippets, prefer a heredoc:
@@ -41,7 +41,7 @@ For multi-line snippets, prefer a heredoc:
 ```
 TOPIC='<topic>' .venv/bin/python <<'PY'
 import sys, os
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from scripts.slug import make_slug
 print(make_slug(os.environ['TOPIC']))
 PY
@@ -58,7 +58,7 @@ Run this check **before anything else**. It can short-circuit the entire skill i
 ```
 .venv/bin/python <<'PY'
 import sys
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from pathlib import Path
 from scripts.learnings_index import read_all, count_pending_older_than, filter_pending
 
@@ -96,7 +96,7 @@ To check 24h freshness:
 .venv/bin/python <<'PY'
 import sys, time
 from pathlib import Path
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 tasks_dir = Path('tasks')
 cutoff = time.time() - 86400
 recent = False
@@ -122,7 +122,7 @@ If the user chose to consolidate, return immediately. Otherwise continue to Phas
 ```
 TOPIC='<topic>' .venv/bin/python <<'PY'
 import sys, os
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from scripts.slug import make_slug
 print(make_slug(os.environ['TOPIC']))
 PY
@@ -158,7 +158,7 @@ Once `case_path` is fixed:
 ```
 CASE='<case_path>' .venv/bin/python <<'PY'
 import sys, os
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from pathlib import Path
 from scripts import lockfile
 case = Path(os.environ['CASE'])
@@ -179,7 +179,7 @@ Now acquire:
 ```
 CASE='<case_path>' .venv/bin/python <<'PY'
 import sys, os
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from pathlib import Path
 from scripts import lockfile
 lockfile.acquire(Path(os.environ['CASE']))
@@ -190,7 +190,7 @@ PY
 If acquisition raises (a lock reappeared in the race window), emit the failure and stop. **From this point on, every exit path of the skill MUST release the lockfile** — wrap the rest of your work mentally in a try/finally. The release call:
 
 ```
-CASE='<case_path>' .venv/bin/python -c "import sys; sys.path.insert(0, '.'); from pathlib import Path; from scripts import lockfile; lockfile.release(Path('<case_path>'))"
+CASE='<case_path>' .venv/bin/python -c "import sys; sys.path.insert(0, '.claude/skills/_lib'); from pathlib import Path; from scripts import lockfile; lockfile.release(Path('<case_path>'))"
 ```
 
 Call this at the very end of the skill (success path) AND at any early-exit point (user cancellation, validation error).
@@ -225,7 +225,7 @@ The `line` value is later embedded in the session block heading.
 ```
 TOPIC='<topic>' .venv/bin/python <<'PY'
 import sys, os, json
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from scripts.mode_detect import detect_mode_fast
 print(json.dumps(detect_mode_fast(os.environ['TOPIC'])))
 PY
@@ -240,8 +240,8 @@ If `mode is None`, you (Claude) are the LLM classifier. Load the prompt:
 ```
 .venv/bin/python <<'PY'
 import sys, yaml
-sys.path.insert(0, '.')
-with open('data/mode-detection.yaml') as f:
+sys.path.insert(0, '.claude/skills/_lib')
+with open('.claude/skills/_lib/data/mode-detection.yaml') as f:
     cfg = yaml.safe_load(f)
 print(cfg['classification_prompt'])
 print('---THRESHOLD---')
@@ -281,9 +281,9 @@ If you presented a recommendation (Recommended marker) and the user picked the o
 ```
 TOPIC='<topic>' .venv/bin/python <<'PY'
 import sys, os, re, json, yaml
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 topic = os.environ['TOPIC']
-with open('data/topic-integrations.yaml') as f:
+with open('.claude/skills/_lib/data/topic-integrations.yaml') as f:
     cfg = yaml.safe_load(f)
 matches = []
 for iid, idef in cfg['integrations'].items():
@@ -312,7 +312,7 @@ Note: the `exa` integration includes a catch-all `(?i).*` trigger so it matches 
 
 ### 5.2 Infer entity tags (you, in your head)
 
-Look at the topic. Based on the canonical list in `data/topic-integrations.yaml::_meta.entity_types`, decide which entity tags apply. Common cases:
+Look at the topic. Based on the canonical list in `.claude/skills/_lib/data/topic-integrations.yaml::_meta.entity_types`, decide which entity tags apply. Common cases:
 
 - "best coffee shops in Berlin" → `entity:local_business`
 - "compare React vs Vue vs Svelte" → `entity:software_library`
@@ -328,7 +328,7 @@ The "topic-type signature" is the sorted tuple of `(matched_integration_ids + in
 ```
 SIG_JSON='<json array of strings>' .venv/bin/python <<'PY'
 import sys, os, json
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from scripts.preferences import is_never_suggest
 sig = json.loads(os.environ['SIG_JSON'])
 print(int(is_never_suggest(sig)))
@@ -352,7 +352,7 @@ For each remaining match, present an `AskUserQuestion`:
 For the `Never` choice:
 
 ```
-SIG_JSON='<json>' IID='<integration_id>' .venv/bin/python -c "import sys, os, json; sys.path.insert(0, '.'); from scripts.preferences import add_never_suggest; add_never_suggest(json.loads(os.environ['SIG_JSON']), os.environ['IID'])"
+SIG_JSON='<json>' IID='<integration_id>' .venv/bin/python -c "import sys, os, json; sys.path.insert(0, '.claude/skills/_lib'); from scripts.preferences import add_never_suggest; add_never_suggest(json.loads(os.environ['SIG_JSON']), os.environ['IID'])"
 ```
 
 Use the per-integration signature (the integration id sorted with the inferred entity tags), so future similar topics skip this exact integration.
@@ -631,7 +631,7 @@ If `Yes`:
 ```
 TRIGGER='user-feedback' CTX='<one-line summary>' TYPE='<workflow|integration|tier|source|other>' BODY='<2-4 sentence body capturing what to remember>' .venv/bin/python <<'PY'
 import sys, os
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from pathlib import Path
 from scripts.learnings_write import write_learning
 path = write_learning(
@@ -664,13 +664,13 @@ For signal (e) ("this is wrong"), pick `type_` based on what the user is correct
 Release the lockfile (success path):
 
 ```
-CASE='<case_path>' .venv/bin/python -c "import sys; sys.path.insert(0, '.'); from pathlib import Path; from scripts import lockfile; lockfile.release(Path('<case_path>'))"
+CASE='<case_path>' .venv/bin/python -c "import sys; sys.path.insert(0, '.claude/skills/_lib'); from pathlib import Path; from scripts import lockfile; lockfile.release(Path('<case_path>'))"
 ```
 
 Then emit a final milestone:
 
 ```
-.venv/bin/python -c "import sys; sys.path.insert(0, '.'); from scripts.status import milestone; milestone('plan-complete', 'wrote outline.yaml + search-log.md to <case_path> — run /research-deep to execute')"
+.venv/bin/python -c "import sys; sys.path.insert(0, '.claude/skills/_lib'); from scripts.status import milestone; milestone('plan-complete', 'wrote outline.yaml + search-log.md to <case_path> — run /research-deep to execute')"
 ```
 
 End the skill. The user's next step is `/research-deep <case>` (or just `/research-deep` which auto-discovers the most recent case).

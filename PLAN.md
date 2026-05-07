@@ -10,7 +10,7 @@ Implement four Claude Code skills (`/research`, `/research-deep`, `/research-rep
 
 ## Technical Context
 
-- **Language / Version**: Python 3.10+ for `scripts/`. SKILL.md prompts are pure Markdown executed by Claude Code's runtime. (Cites SPECS Assumptions §"Python 3.10+ environment is available".)
+- **Language / Version**: Python 3.10+ for `.claude/skills/_lib/scripts/`. SKILL.md prompts are pure Markdown executed by Claude Code's runtime. (Cites SPECS Assumptions §"Python 3.10+ environment is available".)
 - **Primary Dependencies**:
   - `requests` — HTTP for URL validation and Tier 1 fallback fetchers (Jina / Exa / Wayback) (FR-011, FR-028).
   - `PyYAML` — read/write all `data/*.yaml` registries and outline/fields/learnings frontmatter (FR-013, FR-015, FR-005, FR-023).
@@ -26,7 +26,7 @@ Implement four Claude Code skills (`/research`, `/research-deep`, `/research-rep
   - `.config/research-skill/.env` for credentials, gitignored (FR-005).
 - **Testing**: `pytest` 8+. Pure scripts get unit tests under `tests/unit/`. Skill end-to-end flows are validated by fixture-based integration tests (recorded WebSearch/WebFetch JSON responses) under `tests/integration/`. No coverage target gate for v1; coverage measured but not enforced. Live HTTP smoke test only in `tests/smoke/` (manual).
 - **Target Platform**: Claude Code (CLI + Desktop + IDE). Skill format: `.claude/skills/<name>/SKILL.md`. Per-skill dependencies declared at the top of each SKILL.md.
-- **Project Type**: Claude Code multi-skill (4 sibling skills under one repo) plus shared `scripts/` and `data/` libraries.
+- **Project Type**: Claude Code multi-skill (4 sibling skills under one repo) plus shared `.claude/skills/_lib/scripts/` and `.claude/skills/_lib/data/` libraries.
 - **Performance Goals**:
   - SC-001: 5-item comparative completes in <15 min wall-clock (assumes WebSearch p95 ≤3s, WebFetch p95 ≤8s, parallelism 5 agents).
   - SC-003: 100% of cited URLs validated post-hoc.
@@ -56,7 +56,7 @@ Plus implicit governance from the spec-kit chain itself:
 
 | Rule | Status | Notes |
 |---|---|---|
-| No code in PLAN (per `patrones/spec-kit-prompts/plan.md`) | ✅ aligned | This document describes structure and choices; concrete code lives in `scripts/` and SKILL.md prompts. |
+| No code in PLAN (per `patrones/spec-kit-prompts/plan.md`) | ✅ aligned | This document describes structure and choices; concrete code lives in `.claude/skills/_lib/scripts/` and SKILL.md prompts. |
 | PLAN does not modify SPECS | ✅ aligned | All FR/SC references are read-only here. |
 | `/research-deep` cannot run without `/research` first (FR-001) | ✅ aligned | Enforced by lockfile + outline.yaml presence check (Architectural Patterns §"Skill orchestration"). |
 
@@ -74,38 +74,39 @@ research-skill/
 │       │   └── SKILL.md                  # parallel-agent execution orchestrator
 │       ├── research-report/
 │       │   └── SKILL.md                  # synthesis + report generator
-│       └── research-consolidate/
-│           └── SKILL.md                  # learnings consolidation flow
-├── data/                                  # versioned config registries
-│   ├── source-tiers.yaml                  # FR-013 — domain → tier
-│   ├── publisher-graph.yaml               # FR-015 — domain → parent publisher
-│   ├── topic-integrations.yaml            # FR-005 — topic triggers → integration suggestions
-│   ├── mode-detection.yaml                # FR-004 — keyword fast-path + LLM threshold
-│   └── fallback-extractors.yaml           # FR-028 — Tier 1 + Tier 2 chain config
-├── scripts/                               # deterministic Python helpers
-│   ├── __init__.py
-│   ├── slug.py                            # FR-002a slug generation
-│   ├── lockfile.py                        # FR-002a lock + stale detection
-│   ├── validate_urls.py                   # FR-011 HEAD/GET validator
-│   ├── score_source.py                    # FR-013/14/15 tiering + numeric score
-│   ├── extractors/
-│   │   ├── __init__.py
-│   │   ├── jina.py                        # FR-028 Tier 1a
-│   │   ├── exa.py                         # FR-028 Tier 1b + WebSearch fallback
-│   │   ├── wayback.py                     # FR-028 Tier 1c
-│   │   └── browser.py                     # FR-028 Tier 2 dispatcher (detects available MCP/extension)
-│   ├── search/
-│   │   ├── __init__.py
-│   │   ├── brave.py                       # FR-028 WebSearch fallback
-│   │   └── duckduckgo.py                  # FR-028 WebSearch fallback (last resort)
-│   ├── integrations/                      # FR-005 — per-topic integration adapters (post-MVP scaffold)
-│   │   ├── __init__.py
-│   │   └── base.py                        # uniform interface; concrete adapters added incrementally
-│   ├── mode_detect.py                     # FR-004 keyword fast-path
-│   ├── status.py                          # FR-033 streaming status emitter
-│   ├── learnings_index.py                 # FR-024 consolidation index/grouping
-│   ├── build_report.py                    # FR-017/18 markdown + CSV emitter
-│   └── env.py                             # .config/research-skill/.env loader
+│       ├── research-consolidate/
+│       │   └── SKILL.md                  # learnings consolidation flow
+│       └── _lib/                          # skill-internal shared library (not a slash command)
+│           ├── data/                      # versioned config registries (travel with the skill)
+│           │   ├── source-tiers.yaml      # FR-013 — domain → tier
+│           │   ├── publisher-graph.yaml   # FR-015 — domain → parent publisher
+│           │   ├── topic-integrations.yaml# FR-005 — topic triggers → integration suggestions
+│           │   ├── mode-detection.yaml    # FR-004 — keyword fast-path + LLM threshold
+│           │   └── fallback-extractors.yaml# FR-028 — Tier 1 + Tier 2 chain config
+│           └── scripts/                   # deterministic Python helpers (travel with the skill)
+│               ├── __init__.py
+│               ├── slug.py                # FR-002a slug generation
+│               ├── lockfile.py            # FR-002a lock + stale detection
+│               ├── validate_urls.py       # FR-011 HEAD/GET validator
+│               ├── score_source.py        # FR-013/14/15 tiering + numeric score
+│               ├── extractors/
+│               │   ├── __init__.py
+│               │   ├── jina.py            # FR-028 Tier 1a
+│               │   ├── exa.py             # FR-028 Tier 1b + WebSearch fallback
+│               │   ├── wayback.py         # FR-028 Tier 1c
+│               │   └── browser.py         # FR-028 Tier 2 dispatcher
+│               ├── search/
+│               │   ├── __init__.py
+│               │   ├── brave.py           # FR-028 WebSearch fallback
+│               │   └── duckduckgo.py      # FR-028 WebSearch fallback (last resort)
+│               ├── integrations/          # FR-005 — per-topic integration adapters
+│               │   ├── __init__.py
+│               │   └── base.py            # uniform interface
+│               ├── mode_detect.py         # FR-004 keyword fast-path
+│               ├── status.py              # FR-033 streaming status emitter
+│               ├── learnings_index.py     # FR-024 consolidation index/grouping
+│               ├── build_report.py        # FR-017/18 markdown + CSV emitter
+│               └── env.py                 # .config/research-skill/.env loader
 ├── tests/
 │   ├── unit/                              # one file per scripts/* module
 │   ├── integration/                       # fixture-based skill flows

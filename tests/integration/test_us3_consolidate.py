@@ -33,7 +33,7 @@ from scripts.learnings_write import update_status, write_learning
 FIXTURES = Path(__file__).parent.parent / "fixtures"
 LEARNINGS_FIXTURES = FIXTURES / "learnings"
 REPO_ROOT = Path(__file__).parent.parent.parent
-DATA_DIR = REPO_ROOT / "data"
+DATA_DIR = REPO_ROOT / ".claude" / "skills" / "_lib" / "data"
 
 _ALL_TYPES = [
     "source-classification",

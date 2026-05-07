@@ -19,7 +19,7 @@ from scripts.mode_detect import detect_mode_fast
 
 REPO_ROOT = Path(__file__).parent.parent.parent.parent
 FIXTURE_PATH = REPO_ROOT / "tests" / "fixtures" / "sc" / "mode_detection_topics.yaml"
-DATA_DIR = REPO_ROOT / "data"
+DATA_DIR = REPO_ROOT / ".claude" / "skills" / "_lib" / "data"
 
 
 def _load_topics():

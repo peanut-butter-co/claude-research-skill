@@ -33,8 +33,8 @@ This skill implements FRs **001, 002a, 007, 008, 009, 010, 011, 012, 013, 014, 0
 
 ## Invariants
 
-- **Project root** is the current working directory (the directory containing `tasks/`, `data/`, `learnings/`, `scripts/`, `.venv/`).
-- **Python is invoked via `.venv/bin/python -c "..."`** — never via `python` or `python3`. Always insert the project root onto `sys.path` first: `import sys; sys.path.insert(0, '.')`.
+- **Project root** is the current working directory (the directory containing `tasks/`, `.claude/skills/_lib/data/`, `learnings/`, `scripts/`, `.venv/`).
+- **Python is invoked via `.venv/bin/python -c "..."`** — never via `python` or `python3`. Always insert the project root onto `sys.path` first: `import sys; sys.path.insert(0, '.claude/skills/_lib')`.
 - **Working directory resets between `Bash` calls** for sub-agents in some Claude Code modes — agents must always use absolute paths or `cd $(pwd)`-equivalents. The orchestrator itself uses paths relative to the project root.
 - **Never skip Tier 1 fetch fallbacks to go directly to Tier 2 (browser)** — see FR-028 below.
 - **Never invent a tier**: only `assign_tier()` decides A/B/C/D/Unknown. Unknown sources MUST log a learning entry.
@@ -51,7 +51,7 @@ The skill takes no arguments. Detect the active case:
 .venv/bin/python -c "
 import sys, os
 from pathlib import Path
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 tasks = Path('tasks')
 if not tasks.exists():
     print('NO_TASKS')
@@ -93,7 +93,7 @@ Run this Python in one Bash call, before doing any work in `tasks/<case>/`:
 .venv/bin/python -c "
 import sys, json
 from pathlib import Path
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from scripts.lockfile import acquire, check_stale, read_lock
 case = Path('tasks/<case>')
 # Try to GC stale lock first
@@ -113,7 +113,7 @@ If exit code is 2 (LOCKED), **fail-fast**: print the lockfile contents and refus
 If lock acquisition succeeds, continue. **Always release the lock** in the final step (and on any error path) via:
 
 ```bash
-.venv/bin/python -c "import sys; sys.path.insert(0, '.'); from pathlib import Path; from scripts.lockfile import release; release(Path('tasks/<case>'))"
+.venv/bin/python -c "import sys; sys.path.insert(0, '.claude/skills/_lib'); from pathlib import Path; from scripts.lockfile import release; release(Path('tasks/<case>'))"
 ```
 
 ---
@@ -155,7 +155,7 @@ Compute `agent_id` for each unit:
 
 ```bash
 .venv/bin/python -c "
-import sys; sys.path.insert(0, '.')
+import sys; sys.path.insert(0, '.claude/skills/_lib')
 from scripts.slug import make_slug
 print(make_slug('<unit_name>'))
 "
@@ -227,7 +227,7 @@ After every round, before deciding whether to continue:
 ```bash
 .venv/bin/python -c "
 import sys, json
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from scripts.score_source import apply_cross_citation_bonus
 sources = json.loads(<JSON_BLOB>)
 out = apply_cross_citation_bonus(sources, data_dir='data')
@@ -389,7 +389,7 @@ If the user confirms `Yes`:
 ```
 TRIGGER='user-feedback' CTX='<one-line summary>' TYPE='<workflow|integration|tier|source|domain-fact|scoring-rule|process-improvement|other>' BODY='<2-4 sentence body capturing what to remember>' .venv/bin/python <<'PY'
 import sys, os
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from pathlib import Path
 from scripts.learnings_write import write_learning
 path = write_learning(
@@ -460,7 +460,7 @@ Each round emits:
 4a. **FR-021 final sweep**: if the user responds to the final summary with feedback signals (per the rules in Step 10.5), run one last Step 10.5 sweep before releasing the lock. Keep it light — only fire if a signal is unambiguous; do not prompt on silence or casual acknowledgements.
 5. **Release the lock** (always — even on error paths, wrap the whole flow accordingly):
    ```bash
-   .venv/bin/python -c "import sys; sys.path.insert(0, '.'); from pathlib import Path; from scripts.lockfile import release; release(Path('tasks/<case>'))"
+   .venv/bin/python -c "import sys; sys.path.insert(0, '.claude/skills/_lib'); from pathlib import Path; from scripts.lockfile import release; release(Path('tasks/<case>'))"
    ```
 
 The orchestrator is done. Downstream skills (`/research-consolidate`, `/research-report`) will read `tasks/<case>/output/*.json` and `search-log.md`.
@@ -506,7 +506,7 @@ subquery: <subquery_text>
 <bulleted list of _meta.hints_received[]; empty for round 1>
 
 # Project root
-You are running with the project root as cwd. Use absolute or `.`-relative paths. Python helpers go through `.venv/bin/python -c "..."` with `sys.path.insert(0, '.')`.
+You are running with the project root as cwd. Use absolute or `.`-relative paths. Python helpers go through `.venv/bin/python -c "..."` with `sys.path.insert(0, '.claude/skills/_lib')`.
 
 # Procedure (per field — repeat until budget exhausted or all fields filled)
 
@@ -535,7 +535,7 @@ You are running with the project root as cwd. Use absolute or `.`-relative paths
    ```
    .venv/bin/python -c "
    import sys, json
-   sys.path.insert(0, '.')
+   sys.path.insert(0, '.claude/skills/_lib')
    from scripts.score_source import assign_tier, score_source
    t = assign_tier('<url>', title='<title>', data_dir='data')
    s = score_source('<url>', t['tier'], '<pub_date>', data_dir='data')
@@ -797,7 +797,7 @@ For every URL the agents collect:
 ```bash
 .venv/bin/python -c "
 import sys, json
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from scripts.score_source import assign_tier, score_source, apply_cross_citation_bonus
 t = assign_tier('<url>', title='<title>', data_dir='data')
 s = score_source('<url>', t['tier'], '<pub_date>', is_historical_topic=False, data_dir='data')
@@ -813,7 +813,7 @@ If `assign_tier` returns `unclassified: true`, the orchestrator (or the agent th
 import sys
 from pathlib import Path
 from datetime import date
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from scripts.learnings_write import write_learning
 write_learning(
     trigger='self-detection',
@@ -873,7 +873,7 @@ The orchestrator does NOT call `/last30days` itself; each agent does, once per r
 
 Use the helpers:
 ```bash
-.venv/bin/python -c "import sys; sys.path.insert(0, '.'); from scripts.status import orchestrator, milestone, agent; orchestrator('<msg>')"
+.venv/bin/python -c "import sys; sys.path.insert(0, '.claude/skills/_lib'); from scripts.status import orchestrator, milestone, agent; orchestrator('<msg>')"
 ```
 
 ---
@@ -901,7 +901,7 @@ Or, with an explicit case (advanced):
 The skill expects:
 - `tasks/<case>/outline.yaml` — required.
 - `tasks/<case>/fields.yaml` — required if `outline.mode == 'comparative'`.
-- `data/` — for tier classification.
+- `.claude/skills/_lib/data/` — for tier classification.
 - `learnings/` — for cumulative anomaly logs.
 - `.config/research-skill/.env` — optional; for `BRAVE_API_KEY` / `EXA_API_KEY`.
 - `.venv/` — required.

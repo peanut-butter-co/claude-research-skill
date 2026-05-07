@@ -24,7 +24,7 @@ import pytest
 # ---------------------------------------------------------------------------
 
 REPO_ROOT = Path(__file__).parent.parent.parent.parent
-DATA_DIR = REPO_ROOT / "data"
+DATA_DIR = REPO_ROOT / ".claude" / "skills" / "_lib" / "data"
 SKILLS_DIR = REPO_ROOT / ".claude" / "skills"
 
 # ---------------------------------------------------------------------------

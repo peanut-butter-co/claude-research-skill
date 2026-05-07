@@ -29,7 +29,7 @@ from scripts.mode_detect import detect_mode_fast
 
 FIXTURES = Path(__file__).parent.parent.parent / "fixtures"
 REPO_ROOT = Path(__file__).parent.parent.parent.parent
-DATA_DIR = REPO_ROOT / "data"
+DATA_DIR = REPO_ROOT / ".claude" / "skills" / "_lib" / "data"
 ITEMS = ["jest", "vitest", "playwright", "mocha", "jasmine"]
 
 

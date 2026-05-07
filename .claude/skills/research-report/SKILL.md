@@ -21,7 +21,7 @@ This skill takes **no arguments**. It auto-discovers the active case from `tasks
 All Python helpers live in `scripts/` at the repo root. Invoke them with the project venv:
 
 ```bash
-.venv/bin/python -c "import sys; sys.path.insert(0, '.'); from scripts.<module> import <fn>; ..."
+.venv/bin/python -c "import sys; sys.path.insert(0, '.claude/skills/_lib'); from scripts.<module> import <fn>; ..."
 ```
 
 You will mostly call:
@@ -43,7 +43,7 @@ Run this check **before anything else**. It can short-circuit the skill if too m
 ```
 .venv/bin/python <<'PY'
 import sys
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 from pathlib import Path
 from scripts.learnings_index import read_all, count_pending_older_than, filter_pending
 
@@ -68,7 +68,7 @@ To check 24h freshness:
 .venv/bin/python <<'PY'
 import sys, time
 from pathlib import Path
-sys.path.insert(0, '.')
+sys.path.insert(0, '.claude/skills/_lib')
 tasks_dir = Path('tasks')
 cutoff = time.time() - 86400
 recent = False

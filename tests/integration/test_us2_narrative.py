@@ -32,7 +32,7 @@ from scripts.slug import make_slug
 
 FIXTURES = Path(__file__).parent.parent / "fixtures"
 REPO_ROOT = Path(__file__).parent.parent.parent
-DATA_DIR = REPO_ROOT / "data"
+DATA_DIR = REPO_ROOT / ".claude" / "skills" / "_lib" / "data"
 
 _US2_ITEM_FILES = [
     "us2_scope_of_obligations.json",
