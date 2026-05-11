@@ -307,3 +307,59 @@ domains:
   iloveindia.com:
     tier: D
     notes: "iLoveIndia — lifestyle content farm; thin SEO-driven articles"
+
+  # ─── B2C / events / press wires (T109, added 2026-05-08) ──────────────────
+  # All entries below are tier:proposed pending review (FR-013a / TASKS T109).
+  # Rationale lives in TASKS.md §Phase 7.1 T109.
+
+  timeout.com:
+    tier: B  # tier:proposed pending review
+    notes: "Time Out — editorial city-guide reviews; B for editorial diligence"
+
+  eventbrite.com:
+    tier: C  # tier:proposed pending review
+    notes: "Eventbrite — UGC event marketplace; listings only, no editorial verification"
+
+  ticketmaster.com:
+    tier: C  # tier:proposed pending review
+    notes: "Ticketmaster — vendor / box-office; listings, not editorial"
+
+  feverup.com:
+    tier: C  # tier:proposed pending review
+    notes: "Fever — commerce/discovery platform for live experiences; listing-grade source"
+
+  newsroom.feverup.com:
+    tier: B  # tier:proposed pending review
+    notes: "Fever Newsroom — official PR; B as primary corporate source"
+
+  dice.fm:
+    tier: C  # tier:proposed pending review
+    notes: "DICE — vendor for live music tickets; listing-grade"
+
+  songkick.com:
+    tier: C  # tier:proposed pending review
+    notes: "Songkick — UGC concert listings"
+
+  axios.com:
+    tier: A  # tier:proposed pending review
+    notes: "Axios — original reporting; A for political/business coverage"
+
+  theverge.com:
+    tier: A  # tier:proposed pending review
+    notes: "The Verge — Vox Media; original tech/culture reporting"
+
+  techcrunch.com:
+    tier: B  # tier:proposed pending review
+    notes: "TechCrunch — Yahoo; original startup reporting; B (less editorial weight than newspapers)"
+
+  prnewswire.com:
+    tier: C  # tier:proposed pending review
+    notes: "PR Newswire — paid press-wire; vendor-issued releases, no editorial filter"
+
+  businesswire.com:
+    tier: C  # tier:proposed pending review
+    notes: "Business Wire — paid press-wire; same caveat as PR Newswire"
+
+  immersiverumours.com:
+    tier: C  # tier:proposed pending review
+    notes: "Immersive Rumours — niche enthusiast blog covering immersive entertainment"

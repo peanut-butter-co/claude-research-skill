@@ -165,6 +165,29 @@ Gate: all T080..T083 are `[X]`. Independent Test from SPECS §US4 passes end-to-
 
 - [X] T104 [P] FR-031 cross-pollination smoke — two-agent fixture proves a cross-relevant signal (≥2 agents OR entity/term overlap per FR-031) is propagated as a hint into the next round's agent prompt and recorded under `_meta.hints_received[]` — touches: `tests/integration/test_fr031_cross_pollination.py`, `tests/fixtures/fr031/*.json`
 
+### Phase 7.1: FR-013a tier-determinism sweep (added 2026-05-08)
+
+- [ ] T105 Implement `enforce_tiers(item_jsons, data_dir)` in `scripts/score_source.py`: re-runs `assign_tier()` per source, overwrites `tier`/`score_raw`/`unclassified`/`heuristic_flags` in place, returns mutation summary `{corrected: int, unchanged: int, malformed: int}`. Idempotent. Marks malformed/unparseable URLs with `extraction_failed: true`. Unit tests: `tests/unit/test_score_source.py` extended with sweep cases — touches: `scripts/score_source.py`, `tests/unit/test_score_source.py`
+- [ ] T106 Wire `enforce_tiers()` into `/research-deep` Step 6 (after `apply_cross_citation_bonus`, before Tier-D filter); flush back to `output/*.json` per FR-033a; emit `[milestone:tier_sweep] N corrected, M unchanged` per round; on `corrected ≥ 1` write a learning entry via `learnings_write.write_learning(trigger='self-detection', type_='process-improvement', body='agent_id=<id> corrected=<N>')` per FR-013a — touches: `.claude/skills/research-deep/SKILL.md`
+- [ ] T107 Wire `enforce_tiers()` into `/research-report` Step 4 as defense-in-depth: idempotent re-run before `validate_urls` + `build_report`; same milestone emission and learning-write behavior as T106 — touches: `.claude/skills/research-report/SKILL.md`
+- [ ] T108 [P] Regression test for FR-013a: fixture case where an agent JSON has agent-asserted Tier A on a non-registry domain (e.g. `example-blog.com`) plus a malformed URL plus a missing-tier source. Test asserts the sweep (a) overwrites Tier A → Unknown with `unclassified=true`; (b) marks malformed URL `extraction_failed=true`; (c) is idempotent on second run; (d) emits the FR-013a learning entry exactly once when corrections occur — touches: `tests/integration/test_fr013a_tier_sweep.py`, `tests/fixtures/fr013a/*.json`
+- [ ] T109 [P] Expand `data/source-tiers.yaml` seed with B2C/events domains (all entries marked `# tier:proposed pending review`):
+    - timeout.com → B (editorial reviews)
+    - eventbrite.com → C (UGC marketplace)
+    - ticketmaster.com → C (vendor)
+    - feverup.com → C (commerce platform)
+    - newsroom.feverup.com → B (official PR)
+    - dice.fm → C (vendor)
+    - songkick.com → C (UGC listings)
+    - axios.com → A
+    - theverge.com → A
+    - techcrunch.com → B
+    - prnewswire.com → C (press wire)
+    - businesswire.com → C (press wire)
+    - immersiverumours.com → C (niche enthusiast)
+
+    Plus parent-publisher rows in `data/publisher-graph.yaml` for newsroom.feverup.com → feverup.com — touches: `data/source-tiers.yaml`, `data/publisher-graph.yaml`
+
 ### Checkpoint: end of Phase 7
 
 Gate: all T090..T104 are `[X]`. All SC tests pass. All edge case smoke tests pass. Run `pytest -q` (unit + integration + sc + edge) — must be green.
@@ -210,6 +233,7 @@ The minimum shippable surface is **Phase 1 + Phase 2 + Phase 3 (US1 only)**. At 
 | FR-011 | T013, T051 |
 | FR-012 | T026, T051, T071 |
 | FR-013 | T014, T051, T052 |
+| FR-013a | T105, T106, T107, T108 |
 | FR-014 | T014 |
 | FR-015 | T014, T028 (Disagreements) |
 | FR-016 | T014, T052 |
@@ -246,6 +270,7 @@ The minimum shippable surface is **Phase 1 + Phase 2 + Phase 3 (US1 only)**. At 
 |----|------|
 | SC-001 | T092 |
 | SC-002 | T093 |
+| SC-002a | T105 (enforces) + T093 (extended to gate SC-002 measurement on coverage) |
 | SC-003 | T094 |
 | SC-004 | T095 |
 | SC-005 | T096 |

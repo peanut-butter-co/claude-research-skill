@@ -9,6 +9,7 @@ from scripts.score_source import (
     apply_cross_citation_bonus,
     assign_tier,
     compare_sources,
+    enforce_tiers,
     get_publisher,
     score_source,
 )
@@ -290,3 +291,93 @@ def test_compare_sources_full_tie_same_claim_no_conflict(data_dir: Path):
     assert compare_sources(a, b) == 0
     assert "conflict" not in a
     assert "conflict" not in b
+
+
+def test_enforce_tiers_overwrites_invented_tier(data_dir: Path):
+    item_jsons = [{
+        "subquery": "test",
+        "fields": {
+            "summary": {
+                "value": "x",
+                "sources": [
+                    {"url": "https://example-blog.com/post", "title": "Post", "tier": "A"},
+                ],
+            }
+        },
+    }]
+    summary = enforce_tiers(item_jsons, data_dir=data_dir)
+    src = item_jsons[0]["fields"]["summary"]["sources"][0]
+    assert src["tier"] == "Unknown"
+    assert src["unclassified"] is True
+    assert "score_raw" in src
+    assert "tier_weight" in src
+    assert summary["corrected"] == 1
+    assert summary["unchanged"] == 0
+    assert summary["malformed"] == 0
+    assert summary["by_agent"] == {"test": 1}
+
+
+def test_enforce_tiers_preserves_registry_match(data_dir: Path):
+    item_jsons = [{
+        "item": "x",
+        "fields": {
+            "f": {
+                "value": "v",
+                "sources": [
+                    {"url": "https://www.nature.com/abc", "title": "Nature", "tier": "A", "unclassified": False, "heuristic_flags": [], "tier_source": "registry"},
+                ],
+            }
+        },
+    }]
+    summary = enforce_tiers(item_jsons, data_dir=data_dir)
+    src = item_jsons[0]["fields"]["f"]["sources"][0]
+    assert src["tier"] == "A"
+    assert src["unclassified"] is False
+    assert summary["corrected"] == 0
+    assert summary["unchanged"] == 1
+
+
+def test_enforce_tiers_fills_missing_tier(data_dir: Path):
+    item_jsons = [{
+        "subquery": "y",
+        "fields": {
+            "f": {
+                "value": "v",
+                "sources": [{"url": "https://reddit.com/r/x"}],
+            }
+        },
+    }]
+    summary = enforce_tiers(item_jsons, data_dir=data_dir)
+    src = item_jsons[0]["fields"]["f"]["sources"][0]
+    assert src["tier"] == "C"
+    assert src["unclassified"] is False
+    assert summary["corrected"] == 1
+
+
+def test_enforce_tiers_marks_malformed_url(data_dir: Path):
+    item_jsons = [{
+        "subquery": "z",
+        "fields": {"f": {"value": "v", "sources": [{"url": ""}, {"url": "not a url"}]}},
+    }]
+    summary = enforce_tiers(item_jsons, data_dir=data_dir)
+    srcs = item_jsons[0]["fields"]["f"]["sources"]
+    assert srcs[0].get("extraction_failed") is True
+    assert srcs[1].get("extraction_failed") is True
+    assert summary["malformed"] == 2
+
+
+def test_enforce_tiers_idempotent(data_dir: Path):
+    item_jsons = [{
+        "subquery": "i",
+        "fields": {
+            "f": {
+                "value": "v",
+                "sources": [{"url": "https://example-blog.com/x", "tier": "A"}],
+            }
+        },
+    }]
+    s1 = enforce_tiers(item_jsons, data_dir=data_dir)
+    s2 = enforce_tiers(item_jsons, data_dir=data_dir)
+    assert s1["corrected"] == 1
+    assert s2["corrected"] == 0
+    assert s2["unchanged"] == 1

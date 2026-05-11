@@ -1,0 +1,39 @@
+{
+  "subquery": "test subquery",
+  "fields": {
+    "summary": {
+      "value": "Some answer",
+      "sources": [
+        {
+          "url": "https://example-blog.com/post-1",
+          "title": "Random Blog Post",
+          "tier": "A",
+          "date": "2025-06-01"
+        },
+        {
+          "url": "https://www.nature.com/articles/abc",
+          "title": "A Nature paper",
+          "tier": "A",
+          "date": "2024-01-15"
+        },
+        {
+          "url": "https://reddit.com/r/x/comments/123",
+          "title": "Reddit thread",
+          "date": "2025-01-01"
+        },
+        {
+          "url": "",
+          "title": "broken"
+        }
+      ]
+    }
+  },
+  "uncertain": [],
+  "pruned": false,
+  "budget_consumed": 5,
+  "budget_exhausted": false,
+  "_meta": {
+    "agent_run": "2026-05-08T07:30:00Z",
+    "hints_received": []
+  }
+}

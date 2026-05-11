@@ -205,6 +205,12 @@ Integration tests under `tests/integration/` use canned WebSearch/WebFetch respo
 **Rationale**: deterministic CI; cheap to run; honest reproduction of edge cases.
 **Alternative rejected**: VCR-style cassettes — usable but adds a dep and re-recording flow; flat JSON fixtures are sufficient.
 
+### Pattern 11: Deterministic tier sweep at the orchestrator boundary (FR-013a)
+Tier assignment is mechanical (registry lookup + heuristics in `score_source.py`) and therefore lives entirely in the deterministic substrate (Pattern 1). To protect against agents inventing or omitting tiers, the orchestrator runs `enforce_tiers(item_jsons)` at every round boundary in `/research-deep` (Step 6, after `apply_cross_citation_bonus`) and again at `/research-report` Step 4 (before `build_report` and URL validation). The sweep overwrites every source's `tier`, `score_raw`, `unclassified`, and `heuristic_flags` fields with the result of `assign_tier()` and persists the agent JSON back to disk per FR-033a. The sweep is idempotent: re-running on already-swept JSONs is a no-op modulo registry updates.
+
+**Rationale**: agent prompt compliance is fragile (observed in field: 4 of 5 agents in a real run skipped the per-source `assign_tier()` step of the agent prompt template). Code-level enforcement at the orchestrator boundary is cheaper than per-prompt reinforcement, deterministic, and reparable for old artifacts (re-running `/research-report` on a stale case fixes the tiers without re-doing any search).
+**Alternative rejected**: per-agent self-check at JSON-write time — same compliance risk (agents that skip `assign_tier()` will skip the self-check too); doesn't fix already-written JSONs on resume or in old cases. May still be added on top of the sweep, but the sweep is load-bearing.
+
 ## Data Model
 
 SPECS §Key Entities defines five primary shapes. PLAN expands with concrete storage, paths, validation, and lifecycle.
@@ -233,6 +239,7 @@ SPECS §Key Entities defines five primary shapes. PLAN expands with concrete sto
   - Updated at every round boundary (incremental persistence).
   - Final-state on agent completion (`pruned: true` OR `budget_exhausted: true` OR all fields filled).
   - Read by orchestrator (FR-031 synthesis), by `/research-report` (synthesis + URL validation pass), and by `/research-deep` resume logic (FR-010).
+  - Sources within `fields[].sources[]` are subject to the FR-013a tier-determinism sweep (Pattern 11) on every read by the orchestrator and `/research-report`. Agent-asserted tier values are advisory only and overwritten by the sweep; the swept JSON is flushed back to disk per FR-033a.
   - Never deleted by the skill; user may rm to force re-run.
 
 ### `search-log.md`

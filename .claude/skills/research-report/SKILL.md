@@ -121,7 +121,7 @@ Emit: `[orchestrator] Active case: <case>`.
 
 1. Confirm `tasks/<case>/outline.yaml` exists (it does, by construction of Step 1). Read it.
 2. Confirm at least one file matches `tasks/<case>/output/*.json`. If zero matches, fail with: `No agent outputs found. Run /research-deep first.` Stop.
-3. Read every `tasks/<case>/output/*.json` into memory as a list of dicts. Sort them in a stable order — prefer the order of items/subqueries in `outline.yaml` (match by `agent_id` or `item` field), and append any leftovers alphabetically by filename. For narrative mode, match agent JSONs to `outline.yaml` subqueries by the JSON's `subquery` field; for comparative mode, match by the `item` field.
+3. Read every `tasks/<case>/output/*.json` into memory as a list of dicts. **Track the source path alongside each dict** (e.g. as `(path, j)` tuples) — Step 3.5 (the FR-013a sweep) will need to write mutated JSONs back to their original files. Sort them in a stable order — prefer the order of items/subqueries in `outline.yaml` (match by `agent_id` or `item` field), and append any leftovers alphabetically by filename. For narrative mode, match agent JSONs to `outline.yaml` subqueries by the JSON's `subquery` field; for comparative mode, match by the `item` field.
 4. Read `tasks/<case>/fields.yaml` if it exists (comparative mode only). If the file is missing in narrative mode, that's fine; pass `fields_yaml=None` later.
 
 Compute a quick summary:
@@ -157,6 +157,36 @@ If `K + J > 0`, ask the user via `AskUserQuestion`:
 If the user picks `Cancel`, emit `[orchestrator] Cancelled by user.` and stop. Otherwise continue.
 
 If `K + J == 0`, do not prompt — proceed silently.
+
+---
+
+## Step 3.5 — Tier-determinism sweep (FR-013a, defense-in-depth)
+
+Before validating URLs or building the report, re-run `enforce_tiers()` over the loaded item JSONs. This is idempotent — if `/research-deep` already swept this case, nothing changes. It exists to repair stale cases whose JSONs predate FR-013a, and to catch any tier drift introduced by a manual edit between the deep run and report generation.
+
+```python
+from scripts.score_source import enforce_tiers
+import json
+from pathlib import Path
+
+# item_jsons was loaded in Step 2; enforce_tiers mutates in place.
+summary = enforce_tiers(item_jsons, data_dir=Path(".claude/skills/_lib/data"))
+# Persist back to disk per FR-033a if anything changed.
+if summary["corrected"] or summary["malformed"]:
+    for j in item_jsons:
+        agent_id = j.get("item") or j.get("subquery") or "unknown"
+        # The item_jsons list was loaded with file paths; if you tracked them,
+        # write each j back to its original path. Otherwise re-derive from agent_id slug.
+```
+
+Emit:
+```
+[milestone:tier_sweep] <corrected> corrected, <unchanged> unchanged, <malformed> malformed
+```
+
+If `summary["corrected"] >= 1`, write a learning entry via `write_learning(trigger='self-detection', type_='process-improvement', context=case, body='FR-013a sweep at /research-report corrected <N> tier(s); upstream /research-deep step 6.0 may have been skipped or this case predates FR-013a')`.
+
+When persisting, write each mutated `item_json` back to `tasks/<case>/output/<agent_id>.json`. Track the original path alongside each loaded JSON in Step 2 to make this trivial.
 
 ---
 

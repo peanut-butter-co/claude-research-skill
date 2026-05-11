@@ -181,3 +181,9 @@ parents:
   verywell.com: "iac-dotdash"
   thebalance.com: "iac-dotdash"
   investopedia.com: "iac-dotdash"
+
+  # ─── B2C / events / press wires (T109, added 2026-05-08) ──────────────────
+  feverup.com: "fever"
+  newsroom.feverup.com: "fever"
+  theverge.com: "vox-media"
+  techcrunch.com: "yahoo"

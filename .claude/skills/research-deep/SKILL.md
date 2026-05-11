@@ -37,7 +37,7 @@ This skill implements FRs **001, 002a, 007, 008, 009, 010, 011, 012, 013, 014, 0
 - **Python is invoked via `.venv/bin/python -c "..."`** — never via `python` or `python3`. Always insert the project root onto `sys.path` first: `import sys; sys.path.insert(0, '.claude/skills/_lib')`.
 - **Working directory resets between `Bash` calls** for sub-agents in some Claude Code modes — agents must always use absolute paths or `cd $(pwd)`-equivalents. The orchestrator itself uses paths relative to the project root.
 - **Never skip Tier 1 fetch fallbacks to go directly to Tier 2 (browser)** — see FR-028 below.
-- **Never invent a tier**: only `assign_tier()` decides A/B/C/D/Unknown. Unknown sources MUST log a learning entry.
+- **Never invent a tier**: only `assign_tier()` decides A/B/C/D/Unknown. Unknown sources MUST log a learning entry. Per FR-013a, the orchestrator runs a deterministic sweep at every round boundary (Step 6.0) that overwrites any agent-asserted tier with the registry/heuristic result; agents that try to assert tiers will simply be overwritten.
 - **Never overwrite a completed agent JSON on resume.**
 - **Never proceed past a Level 2/3 trigger without user confirmation** (Level 1 is auto-adapt, no pause; Level 2 pauses; Level 3 is hard-stop).
 
@@ -218,12 +218,55 @@ If any agent's `budget_consumed >= 0.8 * query_budget` and `< query_budget`:
 
 ---
 
-## Step 6 — Cross-citation bonus + tier-D filtering (FR-014, FR-016)
+## Step 6 — Tier-determinism sweep + cross-citation bonus + tier-D filtering (FR-013a, FR-014, FR-016)
 
 After every round, before deciding whether to continue:
 
-1. Aggregate all `sources[]` from all agent JSONs into a single list.
-2. Apply cross-citation bonus:
+**6.0 — FR-013a tier-determinism sweep (must run first).** Re-run `assign_tier()` over every source in every agent JSON, overwriting `tier`/`score_raw`/`unclassified`/`heuristic_flags` with the deterministic result. Agents may invent or omit tiers; this sweep enforces the contract.
+
+```bash
+.venv/bin/python <<'PY'
+import sys, json
+from pathlib import Path
+sys.path.insert(0, '.claude/skills/_lib')
+from scripts.score_source import enforce_tiers
+case_dir = Path('tasks/<case>/output')
+item_jsons = []
+paths = []
+for p in sorted(case_dir.glob('*.json')):
+    item_jsons.append(json.loads(p.read_text()))
+    paths.append(p)
+summary = enforce_tiers(item_jsons, data_dir='.claude/skills/_lib/data')
+for p, j in zip(paths, item_jsons):
+    p.write_text(json.dumps(j, indent=2, ensure_ascii=False))
+print(json.dumps(summary))
+PY
+```
+
+Emit:
+```
+[milestone:tier_sweep] <corrected> corrected, <unchanged> unchanged, <malformed> malformed across <N> agents
+```
+
+If `summary.corrected >= 1`, log a learning entry per FR-013a:
+
+```bash
+TRIGGER='self-detection' CTX='<case>' TYPE='process-improvement' BODY='FR-013a sweep corrected <N> tier(s) across <M> agents (<by_agent>); agents are not consistently calling assign_tier()' .venv/bin/python <<'PY'
+import sys, os
+sys.path.insert(0, '.claude/skills/_lib')
+from pathlib import Path
+from scripts.learnings_write import write_learning
+write_learning(
+    trigger=os.environ['TRIGGER'],
+    context=os.environ['CTX'],
+    type_=os.environ['TYPE'],
+    body=os.environ['BODY'],
+    learnings_dir=Path('learnings'),
+)
+PY
+```
+
+**6.1 — Cross-citation bonus.** Aggregate all `sources[]` from all (now-swept) agent JSONs and apply the bonus:
 ```bash
 .venv/bin/python -c "
 import sys, json
@@ -234,9 +277,10 @@ out = apply_cross_citation_bonus(sources, data_dir='data')
 print(json.dumps(out))
 "
 ```
-3. Apply Tier D filtering. If `config.include_tier_d` is **false** (the default), strip all sources with `tier == 'D'` from each field's `sources[]`. If, after stripping, a field has zero sources, mark the field as `uncertain` (add to `uncertain[]`) and set its `value` to `[uncertain]`.
 
-These updates are written **back into the agent JSONs** by the orchestrator. (The agent itself does not know what other agents found, so cross-citation bonus is computed centrally.)
+**6.2 — Tier D filtering.** If `config.include_tier_d` is **false** (the default), strip all sources with `tier == 'D'` from each field's `sources[]`. If, after stripping, a field has zero sources, mark the field as `uncertain` (add to `uncertain[]`) and set its `value` to `[uncertain]`.
+
+These updates are written **back into the agent JSONs** by the orchestrator. The order matters: **sweep → bonus → tier-D filter**, because the bonus depends on `cross_citation_bonus_eligible` which is set by the sweep, and Tier D filtering depends on the swept tier value.
 
 ---
 

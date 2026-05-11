@@ -21,8 +21,10 @@ _tiers_cache: dict[Path, dict] = {}
 _graph_cache: dict[Path, dict] = {}
 
 
-def _resolve_data_dir(data_dir: Path | None) -> Path:
-    return data_dir if data_dir is not None else DEFAULT_DATA_DIR
+def _resolve_data_dir(data_dir: Path | str | None) -> Path:
+    if data_dir is None:
+        return DEFAULT_DATA_DIR
+    return data_dir if isinstance(data_dir, Path) else Path(data_dir)
 
 
 def _load_tiers(data_dir: Path) -> dict:
@@ -262,6 +264,70 @@ def _recency_value(s: dict) -> float:
     if years is None:
         return float("inf")
     return years
+
+
+def enforce_tiers(
+    item_jsons: list[dict],
+    data_dir: Path | None = None,
+    is_historical_topic: bool = False,
+) -> dict:
+    """FR-013a tier-determinism sweep.
+
+    Re-runs assign_tier() + score_source() on every source in every agent JSON's
+    fields[].sources[], overwriting tier / score_raw / unclassified / heuristic_flags
+    in place. Idempotent. Mutates item_jsons; caller is responsible for persisting.
+
+    Returns a summary dict {corrected, unchanged, malformed, by_agent: {agent_id: corrected}}.
+    """
+    data_dir = _resolve_data_dir(data_dir)
+    summary = {"corrected": 0, "unchanged": 0, "malformed": 0, "coerced": 0, "by_agent": {}}
+    for j in item_jsons:
+        agent_id = j.get("item") or j.get("subquery") or "(unknown)"
+        per_agent = 0
+        fields = j.get("fields") or {}
+        for fdata in fields.values():
+            if not isinstance(fdata, dict):
+                continue
+            sources = fdata.get("sources") or []
+            for i, src in enumerate(sources):
+                if isinstance(src, str):
+                    sources[i] = {"url": src}
+                    src = sources[i]
+                    summary["coerced"] += 1
+                elif not isinstance(src, dict):
+                    summary["malformed"] += 1
+                    continue
+                url = src.get("url") or ""
+                try:
+                    parsed = urlparse(url if "://" in url else f"http://{url}")
+                    host = parsed.hostname or ""
+                except Exception:
+                    host = ""
+                if not url or not host or "." not in host or " " in host:
+                    src["extraction_failed"] = True
+                    summary["malformed"] += 1
+                    continue
+                title = src.get("title") or ""
+                pub_date = src.get("date") or src.get("pub_date")
+                t = assign_tier(url, title=title, data_dir=data_dir)
+                s = score_source(url, t["tier"], pub_date, is_historical_topic, data_dir)
+                old_tier = src.get("tier")
+                if old_tier != t["tier"] or src.get("unclassified") is None:
+                    per_agent += 1
+                    summary["corrected"] += 1
+                else:
+                    summary["unchanged"] += 1
+                src["tier"] = t["tier"]
+                src["unclassified"] = t["unclassified"]
+                src["heuristic_flags"] = t["heuristic_flags"]
+                src["tier_source"] = t["source"]
+                src["score_raw"] = s["score_raw"]
+                src["tier_weight"] = s["tier_weight"]
+                src["recency_bonus"] = s["recency_bonus"]
+                src["cross_citation_bonus_eligible"] = s["cross_citation_bonus_eligible"]
+        if per_agent:
+            summary["by_agent"][agent_id] = per_agent
+    return summary
 
 
 def compare_sources(a: dict, b: dict) -> int:
